@@ -21,13 +21,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {model: "Spots"},
         onDelete: 'CASCADE',
-        hooks: true
+        // hooks: true
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {model: "Reviews"},
         onDelete: 'CASCADE',
-        hooks: true
+        // hooks: true
       },
       review: {
         type: Sequelize.STRING
@@ -37,11 +37,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
   },

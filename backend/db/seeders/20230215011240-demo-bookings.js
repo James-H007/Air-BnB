@@ -11,6 +11,7 @@ module.exports = {
     options.tableName = 'Bookings';
     return queryInterface.bulkInsert(options, [
       {
+        id: 1,
         spotId: 1,
         userId: 1,
         startDate: new Date(2023, 2, 1), //Remember we start at index 0
