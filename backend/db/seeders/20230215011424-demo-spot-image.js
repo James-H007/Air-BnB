@@ -14,7 +14,9 @@ module.exports = {
         id: 1,
         spotId: 1,
         url: "Amazing.url",
-        preview: true
+        preview: true,
+        createdAt: new Date('2023-02-01T00:00:00'),
+        updatedAt: new Date('2023-03-01T00:00:00')
       }
     ], {})
   },
