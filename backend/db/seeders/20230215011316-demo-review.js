@@ -1,5 +1,7 @@
 'use strict';
 
+const { query } = require('express');
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -8,29 +10,22 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    options.tableName = 'Spots';
+    options.tableName = 'Reviews';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId: 1,
-        address: "123 Sesame Street",
-        city: "Muppetropolis",
-        state: "California",
-        country: "USA",
-        lat: 2.2,
-        lng: 1.1,
-        name: "Kermit's Place",
-        description: "Cozy and green",
-        price: 900.99
+        spotId: 1,
+        userId: 1,
+        review: "It was mid.",
+        stars: 4
       }
     ], {});
-
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Spots';
+    options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ["123 Sesame Street"]}
+      stars: {[Op.in]: [4]}
     }, {});
   }
 };

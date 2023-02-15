@@ -8,29 +8,21 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    options.tableName = 'Spots';
+    options.tableName = 'SpotImages';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId: 1,
-        address: "123 Sesame Street",
-        city: "Muppetropolis",
-        state: "California",
-        country: "USA",
-        lat: 2.2,
-        lng: 1.1,
-        name: "Kermit's Place",
-        description: "Cozy and green",
-        price: 900.99
+        spotId: 1,
+        url: "Amazing.url",
+        preview: true
       }
-    ], {});
-
+    ], {})
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Spots';
+    options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ["123 Sesame Street"]}
+      url: {[Op.in]: ["Amazing.url"]}
     }, {});
   }
 };
