@@ -17,7 +17,9 @@ module.exports = {
         spotId: 1,
         userId: 1,
         review: "It was mid.",
-        stars: 4
+        stars: 4,
+        createdAt: new Date('2023-02-01T00:00:00'),
+        updatedAt: new Date('2023-03-01T00:00:00')
       }
     ], {});
   },
