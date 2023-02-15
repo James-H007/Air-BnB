@@ -19,12 +19,12 @@ module.exports = (sequelize, DataTypes) => {
 
       Review.belongsTo( //Association with Review and Spot
         models.Spot,
-        {foreignKey: "spotId"}
+        {foreignKey: "spotId", onDelete: 'cascade', hooks:true}
       )
 
       Review.belongsTo( //Association with Review and User
       models.User,
-      {foreignKey: "userId"}
+      {foreignKey: "userId", onDelete: 'cascade', hooks:true}
     )
 
     }
