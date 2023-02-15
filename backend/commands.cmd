@@ -12,3 +12,9 @@ npx sequelize-cli model:generate --name SpotImage --attributes spotId:INTEGER,ur
 
 @REM Creating Model for ReviewImages
 npx sequelize-cli model:generate --name ReviewImage --attributes reviewId:INTEGER,url:STRING
+
+@REM Doing the Migrations
+npx dotenv sequelize-cli db:migrate
+
+@REM Undoing Migrations
+npx dotenv sequelize-cli db:migrate:undo:all
