@@ -10,9 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+    // toSafeObject() { //OLD
+    //   const { id, username, email } = this; // context will be the User instance
+    //   return { id, username, email };
+    // }
+
+      toSafeObject() { //NEW toSafeObject() which now includes firstName and last Name
+      const { id, firstName, lastName, username, email, token} = this; // context will be the User instance
+      return { id, firstName, lastName, email, username, token };
     }
 
     validatePassword(password) {

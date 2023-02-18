@@ -71,8 +71,9 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
   res.json({
-    title: err.title || 'Server Error',
+    // title: err.title || 'Server Error', //Edited it so that we don't see title
     message: err.message,
+    statusCode: err.status,
     errors: err.errors,
     stack: isProduction ? null : err.stack
   });
