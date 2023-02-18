@@ -70,6 +70,13 @@ router.get('/', async(req,res) => {
     res.json({Spots: allSpots})
 })
 
+//Get all spots by the current User
+router.get('/current', requireAuth, async(req,res,next) => {
+    const userId = req.user.id
+    const Spots = await Spot.findAll({where: {ownerId: userId}})
+    res.status(200).json({Spots})
+})
+
 //Create a Spot #7
 router.post('/', requireAuth, validateNewSpot, async(req,res, next) => {
     console.log(req.user.id) // <= This is how you access the user id
@@ -88,7 +95,10 @@ router.post('/', requireAuth, validateNewSpot, async(req,res, next) => {
         price
     })
     res.status(201).json(newSpot)
+})
 
+//Add an Image to a Spot based on the Spot's id #8
+router.post('/:spotId/images', requireAuth, (req,res,next) => {
 
 })
 

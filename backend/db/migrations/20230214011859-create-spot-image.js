@@ -20,6 +20,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {model: "Spots"},
         onDelete: 'CASCADE',
+        allowNull: false
         // hooks: true
       },
       url: {
