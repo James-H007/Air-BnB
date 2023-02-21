@@ -67,10 +67,10 @@ module.exports = (sequelize, DataTypes) => {
         {foreignKey: "userId"}
       )
 
-      User.hasMany( //Association with User and Spots
-        models.Booking,
-        {foreignKey: "userId"}
-      )
+      // User.hasMany( //Association with User and Spots
+      //   models.Booking,
+      //   {foreignKey: "userId"}
+      // )
 
       User.hasMany( //Association with User and Review
       models.Review,
@@ -129,7 +129,7 @@ module.exports = (sequelize, DataTypes) => {
       loginUser: {
         attributes: {}
       }
-    }
+    },
   }
   );
   return User;

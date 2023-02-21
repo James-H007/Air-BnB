@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Spot.belongsTo( //Association with Spot and User
         models.User,
-        {foreignKey: "ownerId", onDelete: 'cascade', hooks:true}
+        {foreignKey: "ownerId", hooks:true, as: 'Owner'}
       )
 
       Spot.hasMany( //Association with Spot and Booking
