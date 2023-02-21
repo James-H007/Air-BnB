@@ -3,6 +3,7 @@ const { restoreUser } = require('../../utils/auth.js')
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const spotsRouter = require('./spots')
+const reviewsRouter = require('./review.js')
 // const { requireAuth } = require('../../utils/auth.js');
 // const { setTokenCookie } = require('../../utils/auth.js');
 const { User, Spot, Booking, Review, ReviewImage, SpotImage } = require('../../db/models');
@@ -14,12 +15,17 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
+
+
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
 });
 
 //Getting the spot
 router.use('/spots', spotsRouter)
+
+//Getting the review
+router.use('/reviews', reviewsRouter);
 
 
 // router.post('/test', function(req, res) {
