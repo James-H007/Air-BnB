@@ -263,16 +263,46 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req,res,next) => {
 
 })
 
+//Delete a Spot #12
+router.delete("/:spotId", requireAuth, async(req,res, next) => {
+    const {spotId} = req.params
+    const userId = req.user.id;
+
+    const errorSpotCheck = await Spot.findOne({where: {id: spotId}})
+    if(!errorSpotCheck) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    const user = await Spot.findOne({where: {ownerId: userId, id: spotId}})
+    if  (!user) {
+        const err = new Error("Unauthorized access")
+        err.title = 'Unauthorized';
+        err.errors = ['Unauthorized'];
+        err.status = 401;
+        return next(err);
+    }
+
+    user.destroy()
+    res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+})
+
 
 // Create a Review for a Spot based on the Spot's id #13
 router.post('/:spotId/reviews', requireAuth, validateNewReview, async(req,res,next) => {
     const newUserId = req.user.id;
     const {spotId} = req.params
     const {review, stars} = req.body
-    console.log(userId)
-    console.log(spotId)
-    const checkDuplicateReview = await Review.findOne({where: {userId:userId, spotId: spotId}})
-    if (!spotId){
+    console.log("newUserId:", newUserId)
+    console.log("spotId: ",spotId)
+    const checkSpot= await Spot.findByPk(spotId)
+    const checkDuplicateReview = await Review.findOne({where: {userId:newUserId, spotId: spotId}})
+    if (!checkSpot){
         console.log("Error happened in the first block")
         const err = new Error ("Spot couldn't be found")
         err.status = 404
@@ -290,17 +320,16 @@ router.post('/:spotId/reviews', requireAuth, validateNewReview, async(req,res,ne
             statusCode: err.status
         })
     }
-    else if (userId && spotId) { //There is something wrong in this block of code
+    else if (newUserId && spotId) { //There is something wrong in this block of code
         console.log("Error happened in the third block")
-        console.log(userId, spotId, review, stars)
+        console.log(newUserId, spotId, review, stars)
 
         const newReview = await Review.create({
             userId: newUserId,
             spotId: spotId,
             review: review,
             stars: stars,
-            createdAt: new Date('2023-02-01T00:00:00'),
-            updatedAt: new Date('2023-02-02T00:00:00')
+
         })
 
         return res.status(200).json(newReview)
