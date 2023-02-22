@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot, User, SpotImage, Review } = require('../../db/models');
+const { Spot, User, SpotImage, Review, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { isFloat } = require('validator');
@@ -74,6 +74,7 @@ const validateNewReview = [
     .notEmpty()
     .isInt({min: 1, max: 5})
     .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
 ]
 
 //#6 Get all Spots
@@ -369,6 +370,33 @@ router.post('/:spotId/reviews', requireAuth, validateNewReview, async(req,res,ne
         return res.status(200).json(newReview)
     }
 
+})
+
+// Get all Reviews by a Spot's id #16
+router.get("/:spotId/reviews", async(req,res,next) => {
+    const {spotId} = req.params;
+
+    const Reviews = await Review.findAll({where: {spotId: spotId},
+        include: [{
+            model: User,
+            attributes: ['id', 'firstName','lastName']
+        },
+        {
+            model: ReviewImage,
+            attributes: ['id', 'url']
+        }
+    ],
+    })
+
+    if(Reviews.length == 0) {
+        const err = new Error("Spot couldn't be found")
+        err.status = 404
+        err.errors = ["Spot couldn't be found"]
+        next(err)
+    }
+    else {
+        res.status(200).json({Reviews})
+    }
 })
 
 
