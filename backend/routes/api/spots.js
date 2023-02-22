@@ -55,7 +55,8 @@ const validateNewSpot = [
         .withMessage('Name must be less than 50 characters'),
     check('description')
         .exists({ checkFalsy: true })
-        .notEmpty(),
+        .notEmpty()
+        .withMessage('Description is required'),
     check('price')
         .exists({ checkFalsy: true })
         .notEmpty()
@@ -78,10 +79,40 @@ const validateNewReview = [
 //#6 Get all Spots
 router.get('/', async(req,res) => {
     console.log("test")
-    const allSpots = await Spot.findAll()
+    const allSpots = await Spot.findAll({
+        include: [{
+            model: SpotImage,
+            attributes: ['url']
+        },
+        { model: Review,
+            attributes: []}
+        ],
+        attributes: {
+            include: [[Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 'avgRating']]
+        },
+        group: ['Spot.id', 'SpotImages.id', "Reviews.spotId"]
+    })
+
+    const payload = allSpots.map(spot => ({
+        id: spot.id,
+        ownerId: spot.ownerId,
+        address: spot.address,
+        city: spot.city,
+        state: spot.state,
+        country: spot.country,
+        lat: spot.lat,
+        lng: spot.lng,
+        name: spot.name,
+        description: spot.description,
+        price: spot.price,
+        createdAt: spot.createdAt,
+        updatedAt: spot.updatedAt,
+        avgRating: spot.dataValues.avgRating,
+        previewImage: spot.SpotImages[0]?.url || null //Use the first preview image or null
+    }))
 
     res.status(200)
-    res.json({Spots: allSpots})
+    res.json({Spots: payload})
 })
 
 
@@ -103,6 +134,7 @@ router.post('/', requireAuth, validateNewSpot, async(req,res, next) => {
         description,
         price
     })
+
     res.status(201).json(newSpot)
 })
 
@@ -158,7 +190,8 @@ router.get('/current', requireAuth, async(req,res,next) => {
     ],
     attributes: {
         include: [[Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 'avgRating']]
-    }
+    },
+    group: ['Spot.id', 'SpotImages.id', "Reviews.spotId"]
     })
 
     const payload = Spots.map(spot => ({
@@ -207,7 +240,8 @@ router.get("/:spotId", async(req,res,next) => {
                     [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 'avgStarRating'],
                     [Sequelize.fn("COUNT", Sequelize.col("Reviews.stars")), 'numReviews']
                 ]
-            }
+            },
+            group: ['Spot.id', 'SpotImages.id', "Reviews.spotId"]
         },
         )
     const errorSpotCheck = await Spot.findOne({where: {id: spotId}})
