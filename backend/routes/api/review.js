@@ -104,8 +104,12 @@ router.put("/:reviewId", requireAuth, validateNewReview, async(req,res, next) =>
     if (!userCheck) {
         const err = new Error ("Review couldn't be found")
         err.status = 404
-        err.errors = ["Review couldn't be found"]
-        return next(err)
+        return res.json({
+            message: err.message,
+            statusCode: err.status
+        })
+        // err.errors = ["Review couldn't be found"]
+        // return next(err)
     }
 
     userCheck.update({
@@ -114,6 +118,37 @@ router.put("/:reviewId", requireAuth, validateNewReview, async(req,res, next) =>
     })
 
     return res.status(200).json(userCheck)
+
+})
+
+//Delete a Review #18
+router.delete('/:reviewId', requireAuth, async(req,res,next) => {
+    const {reviewId} = req.params
+    const userId = req.user.id
+
+    const errorReviewCheck = await Review.findByPk(reviewId)
+    if(!errorReviewCheck) {
+        const err = new Error("Review couldn't be found")
+        err.status = 404
+        return res.status(404).json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
+    }
+    const selectedReview = await Review.findOne({where: {id: reviewId, userId: userId}})
+    if (!selectedReview) {
+        const err = new Error("Unauthorized access")
+        err.title = 'Unauthorized';
+        err.errors = ['Unauthorized'];
+        err.status = 401;
+        return next(err);
+    }
+
+    selectedReview.destroy()
+    return res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
 
 })
 
