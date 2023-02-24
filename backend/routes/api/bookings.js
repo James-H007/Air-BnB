@@ -101,13 +101,14 @@ router.put("/:bookingId", requireAuth, validateBooking, async(req,res,next) => {
         })
     }
 
-    checkBooking.update({
+    else {
+    await checkBooking.update({
         startDate,
         endDate
     })
 
     res.status(200).json(checkBooking)
-
+    }
 })
 
 // Delete a Booking #23
@@ -134,24 +135,42 @@ router.delete('/:bookingId', requireAuth, async(req,res,next) => {
             return next(err);
         }
 
-        console.log("CheckBookingAuthorization.startDate", checkBookingAuthorization.startDate)
+        // console.log("CheckBookingAuthorization.startDate", checkBookingAuthorization.startDate)
+        // const selectedStartDate = new Date(checkBookingAuthorization.startDate)
+        // selectedStartDate.setHours(1,1,1,1)
+        // const now = new Date()
+        // now.setHours(1, 1, 1, 1)
+        // console.log("Current date", now)
+        // console.log("Selected Start date",selectedStartDate)
+        // if (now <= selectedStartDate) { //Put a pin on this
+        //     res.status(403).json({
+        //         message: "Bookings that have been started can't be deleted",
+        //         statusCode: 403
+        //     })
+        // }
+
         const selectedStartDate = new Date(checkBookingAuthorization.startDate)
-        console.log("Start date object", checkBookingAuthorization.startDate)
-        console.log(Date.now())
-        console.log("The converted start date",selectedStartDate)
-        console.log("Look over here",Date.now() <= selectedStartDate)
-        if (Date.now() <= checkBookingAuthorization.startDate) {
-            res.status(403).json({
+        const selectedEndDate = new Date(checkBookingAuthorization.endDate)
+        // selectedEndDate.setUTCHours(0, 0, 0, 0)
+        // selectedStartDate.setUTCHours(0, 0, 0, 0) // set hours to 0
+        const now = new Date()
+
+        // console.log("Current date", now.toISOString())
+        // console.log("Selected Start date",selectedStartDate.toISOString())
+        if (now >= selectedStartDate && now <= selectedEndDate) {
+            return res.status(403).json({
                 message: "Bookings that have been started can't be deleted",
                 statusCode: 403
             })
         }
 
-        checkBookingAuthorization.destroy()
+        else {
+        await checkBookingAuthorization.destroy()
         return res.status(200).json({
             message: "Successfully deleted",
             statusCode: 200
         })
+    }
 })
 
 
