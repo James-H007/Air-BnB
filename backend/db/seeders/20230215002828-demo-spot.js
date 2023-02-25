@@ -11,7 +11,7 @@ module.exports = {
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        id: 1,
+        // id: 1,
         ownerId: 1,
         address: "123 Sesame Street",
         city: "Muppetropolis",
@@ -26,7 +26,7 @@ module.exports = {
         // updatedAt: new Date('2023-03-01T00:00:00')
       },
       {
-        id: 2,
+        // id: 2,
         ownerId: 2,
         address: "Jojoland 8282",
         city: "Honolulu",
@@ -41,7 +41,7 @@ module.exports = {
         // updatedAt: new Date('2023-03-01T00:00:00')
       },
       {
-        id: 3,
+        // id: 3,
         ownerId: 3,
         address: "Gloomhave 1111",
         city: "Honolulu",

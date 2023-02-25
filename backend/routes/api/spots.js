@@ -419,7 +419,7 @@ router.get("/:spotId/reviews", async(req,res,next) => {
     if(Reviews.length == 0) {
         const err = new Error("Spot couldn't be found")
         err.status = 404
-        err.errors = ["Spot couldn't be found"]
+        // err.errors = ["Spot couldn't be found"] This does not need to be included
         next(err)
     }
     else {

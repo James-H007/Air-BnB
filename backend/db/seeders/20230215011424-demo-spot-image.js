@@ -11,7 +11,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     return queryInterface.bulkInsert(options, [
       {
-        id: 1,
+        // id: 1,
         spotId: 1,
         url: "Amazing.url",
         preview: true,
@@ -19,7 +19,7 @@ module.exports = {
         // updatedAt: new Date('2023-03-01T00:00:00')
       },
       {
-        id: 2,
+        // id: 2,
         spotId: 2,
         url: "hooray.url",
         preview: true,
@@ -27,7 +27,7 @@ module.exports = {
         // updatedAt: new Date('2023-03-01T00:00:00')
       },
       {
-        id: 3,
+        // id: 3,
         spotId: 3,
         url: "dance.url",
         preview: true,
