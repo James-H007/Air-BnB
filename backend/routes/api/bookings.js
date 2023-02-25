@@ -150,14 +150,15 @@ router.delete('/:bookingId', requireAuth, async(req,res,next) => {
         // }
 
         const selectedStartDate = new Date(checkBookingAuthorization.startDate)
-        const selectedEndDate = new Date(checkBookingAuthorization.endDate)
+        // const selectedEndDate = new Date(checkBookingAuthorization.endDate)
         // selectedEndDate.setUTCHours(0, 0, 0, 0)
         // selectedStartDate.setUTCHours(0, 0, 0, 0) // set hours to 0
         const now = new Date()
 
         // console.log("Current date", now.toISOString())
         // console.log("Selected Start date",selectedStartDate.toISOString())
-        if (now >= selectedStartDate && now <= selectedEndDate) {
+        // Old code: now >= selectedStartDate && now <= selectedEndDate
+        if (now >= selectedStartDate) {
             return res.status(403).json({
                 message: "Bookings that have been started can't be deleted",
                 statusCode: 403

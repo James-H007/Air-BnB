@@ -7,7 +7,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { isFloat } = require('validator');
 const spot = require('../../db/models/spot');
 const Sequelize = require('sequelize');
-const {Op} = require("sequelize") //Using sequelize operators
+const {Op} = require("sequelize"); //Using sequelize operators
+// const express = require('express');
 // const { router } = require('../../app');
 
 const router = express.Router()
@@ -264,7 +265,7 @@ router.get("/:spotId", async(req,res,next) => {
                     [Sequelize.fn("COUNT", Sequelize.col("Reviews.stars")), 'numReviews']
                 ]
             },
-            group: ['Spot.id', 'SpotImages.id', "Reviews.spotId"]
+            group: ['Spot.id', 'SpotImages.id', "Reviews.spotId", "Owner.id"]
         },
         )
     const errorSpotCheck = await Spot.findOne({where: {id: spotId}})
@@ -301,9 +302,10 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req,res,next) => {
         return next(err);
     }
 
+    else {
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
 
-    user.update({
+    await user.update({
         address,
         city,
         state,
@@ -315,8 +317,8 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req,res,next) => {
         price
     })
 
-    res.status(200).json(user)
-
+    return res.status(200).json(user)
+    }
 
 })
 
@@ -344,11 +346,13 @@ router.delete("/:spotId", requireAuth, async(req,res, next) => {
         return next(err);
     }
 
-    user.destroy()
+    else {
+    await user.destroy()
     return res.status(200).json({
         message: "Successfully deleted",
         statusCode: 200
     })
+    }
 })
 
 
