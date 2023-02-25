@@ -16,9 +16,27 @@ module.exports = {
         userId: 1,
         startDate: new Date(2023, 2, 1), //Remember we start at index 0
         endDate: new Date(2023, 5, 5),
-        createdAt: new Date('2023-02-01T00:00:00'),
-        updatedAt: new Date('2023-03-01T00:00:00')
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
       },
+      {
+        id: 2,
+        spotId: 2,
+        userId: 2,
+        startDate: new Date(2023, 2, 1), //Remember we start at index 0
+        endDate: new Date(2023, 5, 5),
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
+      },
+      {
+        id: 3,
+        spotId: 3,
+        userId: 3,
+        startDate: new Date(2023, 2, 1), //Remember we start at index 0
+        endDate: new Date(2023, 5, 5),
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
+      }
     ], {});
   },
 

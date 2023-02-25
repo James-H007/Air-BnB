@@ -17,6 +17,22 @@ module.exports = {
         preview: true,
         // createdAt: new Date('2023-02-01T00:00:00'),
         // updatedAt: new Date('2023-03-01T00:00:00')
+      },
+      {
+        id: 2,
+        spotId: 2,
+        url: "hooray.url",
+        preview: true,
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
+      },
+      {
+        id: 3,
+        spotId: 3,
+        url: "dance.url",
+        preview: true,
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
       }
     ], {})
   },

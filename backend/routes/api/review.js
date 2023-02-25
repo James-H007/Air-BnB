@@ -167,12 +167,14 @@ router.put("/:reviewId", requireAuth, validateNewReview, async(req,res, next) =>
         // return next(err)
     }
 
-    userCheck.update({
+    else {
+    await userCheck.update({
         review,
         stars
     })
 
     return res.status(200).json(userCheck)
+    }
 
 })
 
