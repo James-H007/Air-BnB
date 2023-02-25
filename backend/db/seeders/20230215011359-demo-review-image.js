@@ -14,8 +14,22 @@ module.exports = {
         id: 1,
         reviewId: 1,
         url: "fakeurl",
-        createdAt: new Date('2023-02-01T00:00:00'),
-        updatedAt: new Date('2023-03-01T00:00:00')
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
+      },
+      {
+        id: 2,
+        reviewId: 2,
+        url: "trueurl",
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
+      },
+      {
+        id: 3,
+        reviewId: 3,
+        url: "amazing url",
+        // createdAt: new Date('2023-02-01T00:00:00'),
+        // updatedAt: new Date('2023-03-01T00:00:00')
       }
     ], {});
   },
