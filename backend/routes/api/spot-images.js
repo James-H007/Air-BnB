@@ -11,7 +11,7 @@ const {Op} = require("sequelize") //Using sequelize operators
 
 const router = express.Router()
 
-// Delete an Image for a Spot review #24
+// Delete an Image for a Spot view #24
 router.delete('/:imageId', requireAuth, async(req,res,next) => {
     const {imageId} = req.params
     const userId = req.user.id
@@ -23,17 +23,20 @@ router.delete('/:imageId', requireAuth, async(req,res,next) => {
             statusCode: 404
         })
     }
-    const spotId = spotImage.id
+    // const spotId = await SpotImage.findByPk(imageId)
 
 
 
-    const spot = await Spot.findByPk(spotId)
+    const spot = await Spot.findByPk(spotImage.spotId)
     const ownerId = spot.ownerId
+
+    console.log('ownerId ',ownerId)
+    console.log('userId ',userId)
 
     if(ownerId !== userId) {
         const err = new Error("Unauthorized access")
         err.title = 'Unauthorized';
-        err.errors = ['Unauthorized'];
+        // err.errors = ['Unauthorized'];
         err.status = 401;
         return next(err);
     }
