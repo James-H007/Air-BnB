@@ -36,7 +36,7 @@ const validateLogin = [
         // err.title = 'Login failed';
         // err.errors = ['The provided credentials were invalid.'];
         // return next(err);
-        return res.json({
+        return res.status(401).json({
           message: err.message,
           statusCode: err.status
         })
