@@ -49,7 +49,7 @@ const validateLogin = [
       const {id,username,email,firstName,lastName} = user
 
       return res.json({
-        user: {id, username, email, firstName, lastName, token}
+        user: {id, username, email, firstName, lastName}
       });
       }
     }

@@ -18,3 +18,12 @@ npx dotenv sequelize-cli db:migrate
 
 @REM Undoing Migrations
 npx dotenv sequelize-cli db:migrate:undo:all
+
+@REM Creating Seeds
+npx sequelize-cli seed:generate --name <descriptiveName>
+
+@REM Seeding
+npx dotenv sequelize-cli db:seed:all
+
+@REM Undoing Seeds
+npx dotenv sequelize-cli db:seed:undo:all

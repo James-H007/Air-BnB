@@ -23,6 +23,8 @@ const handleValidationErrors = (req, _res, next) => {
   next();
 };
 
+//Add to go into app.js and manipulate the error formatting
+
 module.exports = {
   handleValidationErrors
 };
