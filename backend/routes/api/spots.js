@@ -370,10 +370,10 @@ router.post('/:spotId/images', requireAuth, async (req,res,next) => {
     const user = await Spot.findOne({where: {ownerId: userId, id: spotId}})
     // console.log(user)
     if (!user) {
-        const err = new Error("Unauthorized access")
-        err.title = 'Unauthorized';
-        err.errors = ['Unauthorized'];
-        err.status = 401;
+        const err = new Error("Forbidden")
+        err.title = 'Forbidden';
+        // err.errors = ['Unauthorized'];
+        err.status = 403;
         return next(err);
     }
 
@@ -524,7 +524,7 @@ router.delete("/:spotId", requireAuth, async(req,res, next) => {
     const errorSpotCheck = await Spot.findOne({where: {id: spotId}})
     if(!errorSpotCheck) {
         const err = new Error("Spot couldn't be found")
-        err.status(404)
+        err.status = 404
         return res.status(404).json({
             message: "Spot couldn't be found",
             statusCode: 404
@@ -533,10 +533,15 @@ router.delete("/:spotId", requireAuth, async(req,res, next) => {
 
     const user = await Spot.findOne({where: {ownerId: userId, id: spotId}})
     if  (!user) {
-        const err = new Error("Unauthorized access")
-        err.title = 'Unauthorized';
-        err.errors = ['Unauthorized'];
-        err.status = 401;
+        // const err = new Error("Unauthorized access")
+        // err.title = 'Unauthorized';
+        // err.errors = ['Unauthorized'];
+        // err.status = 401;
+        // return next(err);
+        const err = new Error("Forbidden")
+        err.title = 'Forbidden';
+        // err.errors = ['Unauthorized'];
+        err.status = 403;
         return next(err);
     }
 
