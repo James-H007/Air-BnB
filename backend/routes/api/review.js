@@ -50,10 +50,10 @@ router.post("/:reviewId/images", requireAuth, async(req,res,next) => {
     }
 
     if(!checkReviewUser) {
-        const err = new Error("Unauthorized access")
-        err.title = 'Unauthorized';
-        err.errors = ['Unauthorized'];
-        err.status = 401;
+        const err = new Error("Forbidden")
+        // err.title = 'Unauthorized';
+        // err.errors = ['Unauthorized'];
+        err.status = 403;
         return next(err);
     }
 
@@ -77,76 +77,84 @@ router.post("/:reviewId/images", requireAuth, async(req,res,next) => {
 // Get all Reviews of the Current User #15
 router.get("/current", requireAuth, async(req,res, next) => {
     const userId = req.user.id;
-    // const checkReviewUser = await Review.findOne({where: {userId: userId}})
-    const userReviews = await Review.findAll({where: {userId: userId},
-        include: [{
-            model: User,
-            attributes: ['id', 'firstName', 'lastName']
+    const userReviews = await Review.findAll({
+      where: { userId: userId },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
         },
         {
-            model: Spot,
-            attributes: {exclude: ['createdAt', 'updatedAt']},
-            include: [
-                {
-                model: SpotImage,
-                attributes: ['url']
-                }
-            ],attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price',
-            [Sequelize.literal('(SELECT url FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" LIMIT 1)'), 'previewImage']]
-
-        },
-        {
-            model: ReviewImage,
-            attributes: ['id', 'url']
-        }
-        ]
-
-    })
-
-    // console.log(userReviews)
-
-    const Reviews = userReviews.map(review => {
-        const spot = review.Spot
-        const previewImage = spot.SpotImages[0] ? spot.SpotImages[0].url : null // Checks if there is a url else null
-        return {
-            id: userReviews.id,
-            userId: User.id,
-            spotId: Spot.id,
-            review: review,
-            stars: userReviews.stars,
-            createdAt: userReviews.createdAt,
-            updatedAt: userReviews.updatedAt,
-            User,
-            Spot: {
-                id: Spot.id,
-                ownerId: Spot.ownerId,
-                address: Spot.address,
-                city: Spot.city,
-                state: Spot.state,
-                country: Spot.country,
-                lat: Spot.lat,
-                lng: Spot.lng,
-                name: Spot.name,
-                price: Spot.price,
-                previewImage: previewImage
+          model: Spot,
+          attributes: [
+            "id",
+            "ownerId",
+            "address",
+            "city",
+            "state",
+            "country",
+            "lat",
+            "lng",
+            "name",
+            "price",
+          ],
+          include: [
+            {
+              model: SpotImage,
+              attributes: ["url"],
+              where: { preview: true },
+              required: false,
             },
-            ReviewImage
-        }
-    })
+          ],
+        },
+        {
+          model: ReviewImage,
+          attributes: ["id", "url"],
+        },
+      ],
+      attributes: [
+        "id",
+        "userId",
+        "spotId",
+        "review",
+        "stars",
+        "createdAt",
+        "updatedAt",
+      ],
+    });
 
+    const Reviews = userReviews.map((review) => {
+      const spot = review.Spot;
+      const previewImage =
+        spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null; // check if there are any images available
 
+      return {
+        id: review.id,
+        userId: review.userId,
+        spotId: review.spotId,
+        review: review.review,
+        stars: review.stars,
+        createdAt: review.createdAt,
+        updatedAt: review.updatedAt,
+        User: review.User,
+        ReviewImages: review.ReviewImages,
+        Spot: {
+          id: spot.id,
+          ownerId: spot.ownerId,
+          address: spot.address,
+          city: spot.city,
+          state: spot.state,
+          country: spot.country,
+          lat: spot.lat,
+          lng: spot.lng,
+          name: spot.name,
+          price: spot.price,
+          previewImage: previewImage,
+        },
+      };
+    });
 
-    return res.status(200).json({Reviews})
-
-
-    // if(!checkReviewUser) {
-    //     const err = new Error("Unauthorized access")
-    //     err.title = 'Unauthorized';
-    //     err.errors = ['Unauthorized'];
-    //     err.status = 401;
-    //     return next(err);
-    // }
-
+    return res.status(200).json({ Reviews });
 })
 
 // Edit a Review # 17
@@ -194,10 +202,10 @@ router.delete('/:reviewId', requireAuth, async(req,res,next) => {
     }
     const selectedReview = await Review.findOne({where: {id: reviewId, userId: userId}})
     if (!selectedReview) {
-        const err = new Error("Unauthorized access")
-        err.title = 'Unauthorized';
-        err.errors = ['Unauthorized'];
-        err.status = 401;
+        const err = new Error("Forbidden")
+        // err.title = 'Unauthorized';
+        // err.errors = ['Unauthorized'];
+        err.status = 403;
         return next(err);
     }
 
