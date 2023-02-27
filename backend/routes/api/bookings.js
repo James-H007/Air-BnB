@@ -112,9 +112,10 @@ router.put("/:bookingId", requireAuth, validateBooking, async(req,res,next) => {
         })
     }
 
-    const checkBookingAuthorization = await Booking.findByPk(bookingId, {where: {userId:userId}})
+    const checkBookingAuthorization = await Booking.findByPk(bookingId)
+    console.log("checkingbookingauthor",checkBookingAuthorization.userId)
 
-    if  (!checkBookingAuthorization) {
+    if  (checkBookingAuthorization.userId !== userId) {
         // const err = new Error("Unauthorized access")
         // err.title = 'Unauthorized';
         // err.errors = ['Unauthorized'];
