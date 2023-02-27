@@ -110,9 +110,11 @@ const validateBooking = [
 
 const validateQuery = [
     check('page')
+        .optional()
         .isInt({min: 1, max: 10})
         .withMessage("Page must be greater than or equal to 1"),
     check('size')
+        .optional()
         .isInt({min:1, max: 20})
         .withMessage("Size must be greater than or equal to 1"),
     check('maxLat')
@@ -273,7 +275,7 @@ router.get('/', validateQuery,async(req,res) => {
 
     const allSpots = await Spot.findAll(query)
 
-    res.status(200).json(allSpots)
+    res.status(200).json({Spots:allSpots})
     // const allSpots = await Spot.findAll({query,
     //     include: [{
     //                 model: SpotImage,
