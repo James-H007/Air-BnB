@@ -35,7 +35,64 @@ const validateBooking = [
 // Get all of the Current User's Bookings # 20
 
 router.get("/current", requireAuth, async(req,res,next) => {
+    const userId = req.user.id;
+    const userBookings = await Booking.findAll({
+        where: {userId: userId},
+        include: [
+            {
+                model: Spot,
+                attributes: [
+                    "id",
+                    "ownerId",
+                    "address",
+                    "city",
+                    "state",
+                    "country",
+                    "lat",
+                    "lng",
+                    "name",
+                    "price",
+                ],
+                include: [
+                    {
+                      model: SpotImage,
+                      attributes: ["url"],
+                      where: { preview: true },
+                      required: false,
+                    }
+                ],
+            }
+        ]
+    })
 
+    const Bookings = userBookings.map((booking) => {
+        const spot = booking.Spot;
+        const previewImage = spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null; // check if there are any images available
+
+        return {
+            id: booking.id,
+            spotId: booking.spotId,
+            Spot: {
+                id: spot.id,
+                ownerId: spot.ownerId,
+                address: spot.address,
+                city: spot.city,
+                state: spot.state,
+                country: spot.country,
+                lat: spot.lat,
+                lng: spot.lng,
+                name: spot.name,
+                price: spot.price,
+                previewImage: previewImage,
+            },
+            userId: booking.userId,
+            startDate: booking.startDate,
+            endDate: booking.endDate,
+            updatedAt: booking.startDate
+        }
+    })
+
+    return res.status(200).json({Bookings})
 })
 
 //Edit a Booking #22
@@ -128,10 +185,10 @@ router.delete('/:bookingId', requireAuth, async(req,res,next) => {
         const checkBookingAuthorization = await Booking.findByPk(bookingId, {where: {userId:userId}})
 
         if (!checkBookingAuthorization) {
-            const err = new Error("Unauthorized access")
-            err.title = 'Unauthorized';
-            err.errors = ['Unauthorized'];
-            err.status = 401;
+            const err = new Error("Forbidden")
+            // err.title = 'Unauthorized';
+            // err.errors = ['Unauthorized'];
+            err.status = 403;
             return next(err);
         }
 

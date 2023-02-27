@@ -2,16 +2,24 @@ const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, User, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { isFloat } = require('validator');
+const { isFloat, validator } = require('validator');
 const spot = require('../../db/models/spot');
 const Sequelize = require('sequelize');
 const {Op} = require("sequelize"); //Using sequelize operators
 // const express = require('express');
 // const { router } = require('../../app');
 
+
+
 const router = express.Router()
+
+let schema;
+if (process.env.NODE_ENV === 'production') {
+  schema = process.env.SCHEMA;
+}
+
 
 const validateNewSpot = [
     check('address')
@@ -100,45 +108,229 @@ const validateBooking = [
     handleValidationErrors
 ]
 
+const validateQuery = [
+    check('page')
+        .isInt({min: 1, max: 10})
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .isInt({min:1, max: 20})
+        .withMessage("Size must be greater than or equal to 1"),
+    check('maxLat')
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum latitude is invalid"),
+    check('minLat')
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check('minLng')
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum longitude is invalid"),
+    check('maxLng')
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum longitude is invalid"),
+    check('minPrice')
+        .optional()
+        .isDecimal({min:0})
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    check('maxPrice')
+        .optional()
+        .isDecimal({min:0})
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    handleValidationErrors
+]
+
 //#6 Get all Spots
-router.get('/', async(req,res) => {
+//Add Query Filters to Get All Spots #26
+router.get('/', validateQuery,async(req,res) => {
     console.log("test")
-    const allSpots = await Spot.findAll({
-        include: [{
-            model: SpotImage,
-            attributes: ['url']
-        },
-        { model: Review,
-            attributes: []}
+    let query = {
+        where: {}
+    };
+
+
+    const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
+    const size = req.query.size === undefined ? 1 : parseInt(req.query.size)
+
+    query.page = page
+    query.size = size
+    console.log(page)
+    console.log(size)
+
+    if( page >= 1 && size >= 1) {
+        query.limit = size;
+        query.offset = size * (page - 1)
+    }
+
+    let limit = query.limit
+    let offset = query.offset
+
+    let {maxLat, minLat, minLng, maxLng, minPrice, maxPrice} = req.query
+    console.log('minLat before parse float', minLat)
+    maxLat = parseFloat(maxLat)
+    minLat = parseFloat(minLat)
+    minLng = parseFloat(minLng)
+    maxLng = parseFloat(maxLng)
+    minPrice = parseFloat(minPrice)
+    maxPrice = parseFloat(maxPrice)
+
+    console.log("minLat", minLat) //Seems to be fine
+    console.log('maxLat', maxLat)
+    console.log('minLng', minLng)
+    console.log('maxLng', maxLng)
+    console.log('minPrice', minPrice)
+    console.log('maxPrice', maxPrice)
+
+
+
+    if (minLat) {
+        console.log("Error happened here WGAT")
+        query.where.lat = {[Op.gte]: [req.query.minLat]}
+    }
+
+    if (maxLat) {
+        query.where.lat = {[Op.lte]: [req.query.maxLat]}
+    }
+
+    if(minLat && maxLat) {
+        query.where.lat = {[Op.between]: [req.query.minLat,req.query.maxLat]}
+    }
+
+
+    if (minLng) {
+        query.where.lng = {[Op.gte]: [req.query.minLng]}
+    }
+
+    if (maxLng) {
+        query.where.lng = {[Op.lte]: [req.query.maxLng]}
+    }
+
+    if(minLng && maxLng) {
+        query.where.lng = {[Op.between]: [req.query.minLng,req.query.maxLng]}
+    }
+
+    if (minPrice >= 0) {
+        console.log("Error happened here 1")
+        query.where.price = {[Op.gte]: [req.query.minPrice]}
+    }
+
+    if (maxPrice >= 0) {
+        console.log("Error happened here 2")
+        query.where.price = {[Op.lte]: [req.query.maxPrice]}
+    }
+
+    if(minPrice && maxPrice) {
+        query.where.price = {[Op.between]: [req.query.minPrice,req.query.maxPrice]}
+    }
+
+    // query.include = [{
+    //             model: SpotImage,
+    //             attributes: ['url']
+    //         },
+    //         { model: Review,
+    //             attributes: []
+    //         }]
+    // query.attributes = {
+    //     include: [[Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 'avgRating']]
+    // }
+
+    // query.group = ['Spot.id', 'SpotImages.id', "Reviews.spotId"]
+
+    // console.log(query)
+    query.attributes = [
+        'id',
+        'ownerId',
+        'address',
+        'city',
+        'state',
+        'country',
+        'lat',
+        'lng',
+        'name',
+        'description',
+        'price',
+        'createdAt',
+        'updatedAt',
+        [
+            Sequelize.literal(
+              `(SELECT ROUND(AVG(stars), 1) FROM ${
+                schema ? `"${schema}"."Reviews"` : 'Reviews'
+              } WHERE "Reviews"."spotId" = "Spot"."id")`
+            ),
+            'avgRating',
         ],
-        attributes: {
-            include: [[Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 'avgRating']]
-        },
-        group: ['Spot.id', 'SpotImages.id', "Reviews.spotId"]
-    })
+        [
+            Sequelize.literal(
+                `(SELECT url FROM ${
+                  schema ? `"${schema}"."SpotImages"` : 'SpotImages'
+                } WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)`
+              ),
+              'previewImage'
+        ]
+        ]
 
-    const payload = allSpots.map(spot => ({
-        id: spot.id,
-        ownerId: spot.ownerId,
-        address: spot.address,
-        city: spot.city,
-        state: spot.state,
-        country: spot.country,
-        lat: spot.lat,
-        lng: spot.lng,
-        name: spot.name,
-        description: spot.description,
-        price: spot.price,
-        createdAt: spot.createdAt,
-        updatedAt: spot.updatedAt,
-        avgRating: spot.dataValues.avgRating,
-        previewImage: spot.SpotImages[0]?.url || null //Use the first preview image or null
-    }))
+    const allSpots = await Spot.findAll(query)
 
-    res.status(200)
-    res.json({Spots: payload})
+    res.json(allSpots)
+    // const allSpots = await Spot.findAll({query,
+    //     include: [{
+    //                 model: SpotImage,
+    //                 attributes: ['url']
+    //             },
+    //             { model: Review,
+    //                 attributes: [Sequelize.literal(
+    //                     `(SELECT ROUND(AVG(stars), 1) FROM ${
+    //                       schema ? `"${schema}"."Reviews"` : 'Reviews'
+    //                     } WHERE "Reviews"."spotId" = "Spot"."id")`
+    //                   ),
+    //                   'avgRating']}
+    //             ],
+    //             group: ['Spot.id', 'SpotImages.id', "Reviews.spotId"],
+    //     limit,
+    //     offset
+
+    // })
+
+
+
+
+    // const allSpots = await Spot.findAll({
+    //     include: [{
+    //         model: SpotImage,
+    //         attributes: ['url']
+    //     },
+    //     { model: Review,
+    //         attributes: []}
+    //     ],
+    //     attributes: {
+    //         include: [[Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 'avgRating']]
+    //     },
+    //     group: ['Spot.id', 'SpotImages.id', "Reviews.spotId"]
+    // })
+
+    // const payload = allSpots.map(spot => ({
+    //     id: spot.id,
+    //     ownerId: spot.ownerId,
+    //     address: spot.address,
+    //     city: spot.city,
+    //     state: spot.state,
+    //     country: spot.country,
+    //     lat: spot.lat,
+    //     lng: spot.lng,
+    //     name: spot.name,
+    //     description: spot.description,
+    //     price: spot.price,
+    //     createdAt: spot.createdAt,
+    //     updatedAt: spot.updatedAt,
+    //     avgRating: spot.dataValues.avgRating,
+    //     previewImage: spot.SpotImages[0]?.url || null //Use the first preview image or null
+    // }))
+
+    // res.status(200)
+    // res.json({Spots: payload,page,size})
 })
-
 
 
 //Create a Spot #7

@@ -34,10 +34,10 @@ router.delete('/:imageId', requireAuth, async(req,res,next) => {
     console.log('userId ',userId)
 
     if(ownerId !== userId) {
-        const err = new Error("Unauthorized access")
-        err.title = 'Unauthorized';
+        const err = new Error("Forbidden")
+        err.title = 'Forbidden';
         // err.errors = ['Unauthorized'];
-        err.status = 401;
+        err.status = 403;
         return next(err);
     }
 
