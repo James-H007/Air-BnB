@@ -189,9 +189,10 @@ router.delete('/:bookingId', requireAuth, async(req,res,next) => {
             })
         }
 
-        const checkBookingAuthorization = await Booking.findByPk(bookingId, {where: {userId:userId}})
+        const checkBookingAuthorization = await Booking.findByPk(bookingId)
+        console.log("checkingbookingauthor",checkBookingAuthorization.userId)
 
-        if (!checkBookingAuthorization) {
+        if (checkBookingAuthorization.userId !== userId) {
             const err = new Error("Forbidden")
             // err.title = 'Unauthorized';
             // err.errors = ['Unauthorized'];
