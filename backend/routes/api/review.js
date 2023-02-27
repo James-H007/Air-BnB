@@ -43,7 +43,7 @@ router.post("/:reviewId/images", requireAuth, async(req,res,next) => {
     if(!selectedReview) {
         const err = new Error ("Review couldn't be found")
         err.status = 404
-        return res.json({
+        return res.status(404).json({
             message: err.message,
             statusCode: err.status
         })
@@ -167,7 +167,7 @@ router.put("/:reviewId", requireAuth, validateNewReview, async(req,res, next) =>
     if (!userCheck) {
         const err = new Error ("Review couldn't be found")
         err.status = 404
-        return res.json({
+        return res.status(404).json({
             message: err.message,
             statusCode: err.status
         })
