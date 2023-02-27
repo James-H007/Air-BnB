@@ -163,8 +163,8 @@ router.put("/:reviewId", requireAuth, validateNewReview, async(req,res, next) =>
     const {reviewId} = req.params
     const {review, stars} = req.body
     const userCheck = await Review.findOne({where: {userId: userId, id: reviewId}})
-
-    if (!userCheck) {
+    const errorReviewCheck = await Review.findByPk(reviewId)
+    if (!errorReviewCheck) {
         const err = new Error ("Review couldn't be found")
         err.status = 404
         return res.status(404).json({
@@ -173,6 +173,15 @@ router.put("/:reviewId", requireAuth, validateNewReview, async(req,res, next) =>
         })
         // err.errors = ["Review couldn't be found"]
         // return next(err)
+    }
+
+    const selectedReview = await Review.findOne({where: {id: reviewId, userId: userId}})
+    if (!selectedReview) {
+        const err = new Error("Forbidden")
+        // err.title = 'Unauthorized';
+        // err.errors = ['Unauthorized'];
+        err.status = 403;
+        return next(err);
     }
 
     else {
