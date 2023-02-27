@@ -642,6 +642,14 @@ router.post("/:spotId/bookings", requireAuth, validateBooking, async(req,res,nex
         })
     }
 
+    //This will make it so that the owner can't do a booking for their own spot
+    if(checkSpot.ownerId == userId) {
+        return res.status(403).json({
+            message: "Cannot create booking for owned spot",
+            statusCode: 403
+        })
+    }
+
     //This block will check if there's any conflicting bookings
     const checkConflictBooking = await Booking.findAll({where:{
         spotId: spotId,
@@ -663,8 +671,6 @@ router.post("/:spotId/bookings", requireAuth, validateBooking, async(req,res,nex
             }
         })
     }
-
-
 
     const newBooking = await Booking.create({
         spotId,
