@@ -275,7 +275,7 @@ router.get('/', validateQuery,async(req,res) => {
 
     const allSpots = await Spot.findAll(query)
 
-    res.status(200).json({Spots:allSpots})
+    res.status(200).json({Spots:allSpots,page,size})
     // const allSpots = await Spot.findAll({query,
     //     include: [{
     //                 model: SpotImage,
