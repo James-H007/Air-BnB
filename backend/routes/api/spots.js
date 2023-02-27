@@ -489,10 +489,10 @@ router.put("/:spotId", requireAuth, validateNewSpot, async (req,res,next) => {
 
     const user = await Spot.findOne({where: {ownerId: userId, id: spotId}})
     if  (!user) {
-        const err = new Error("Unauthorized access")
-        err.title = 'Unauthorized';
-        err.errors = ['Unauthorized'];
-        err.status = 401;
+        const err = new Error("Forbidden")
+        err.title = 'Forbidden';
+        // err.errors = ['Unauthorized'];
+        err.status = 403;
         return next(err);
     }
 
@@ -568,7 +568,7 @@ router.post('/:spotId/reviews', requireAuth, validateNewReview, async(req,res,ne
         console.log("Error happened in the first block")
         const err = new Error ("Spot couldn't be found")
         err.status = 404
-        return res.json({
+        return res.status(404).json({
             message: err.message,
             statusCode: err.status
         })
@@ -577,7 +577,7 @@ router.post('/:spotId/reviews', requireAuth, validateNewReview, async(req,res,ne
         console.log("Error happened in the second block")
         const err = new Error ("User already has a review for this spot")
         err.status = 403
-        return res.json({
+        return res.status(403).json({
             message: err.message,
             statusCode: err.status
         })
