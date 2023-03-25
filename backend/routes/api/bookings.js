@@ -7,25 +7,25 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { isFloat } = require('validator');
 const spot = require('../../db/models/spot');
 const Sequelize = require('sequelize');
-const {Op} = require("sequelize") //Using sequelize operators
+const { Op } = require("sequelize") //Using sequelize operators
 
 const router = express.Router()
 
 const validateBooking = [
     check('startDate')
-        .exists({checkFalsy: true})
+        .exists({ checkFalsy: true })
         .notEmpty()
         .isISO8601()
         .withMessage("The start date is not a valid date."),
     check('endDate')
-        .exists({checkFalsy: true})
+        .exists({ checkFalsy: true })
         .notEmpty()
         .isISO8601()
         .withMessage("The end date is not a valid date."),
     check('endDate')
-        .custom((value, {req}) => {
+        .custom((value, { req }) => {
             if (value <= req.body.startDate) {
-                throw new Error ("endDate cannot be on or before startDate")
+                throw new Error("endDate cannot be on or before startDate")
             }
             return true
         }),
@@ -34,10 +34,10 @@ const validateBooking = [
 
 // Get all of the Current User's Bookings # 20
 
-router.get("/current", requireAuth, async(req,res,next) => {
+router.get("/current", requireAuth, async (req, res, next) => {
     const userId = req.user.id;
     const userBookings = await Booking.findAll({
-        where: {userId: userId},
+        where: { userId: userId },
         include: [
             {
                 model: Spot,
@@ -55,10 +55,10 @@ router.get("/current", requireAuth, async(req,res,next) => {
                 ],
                 include: [
                     {
-                      model: SpotImage,
-                      attributes: ["url"],
-                      where: { preview: true },
-                      required: false,
+                        model: SpotImage,
+                        attributes: ["url"],
+                        where: { preview: true },
+                        required: false,
                     }
                 ],
             }
@@ -92,14 +92,14 @@ router.get("/current", requireAuth, async(req,res,next) => {
         }
     })
 
-    return res.status(200).json({Bookings})
+    return res.status(200).json({ Bookings })
 })
 
 //Edit a Booking #22
-router.put("/:bookingId", requireAuth, validateBooking, async(req,res,next) => {
-    const {bookingId} = req.params
+router.put("/:bookingId", requireAuth, validateBooking, async (req, res, next) => {
+    const { bookingId } = req.params
     const userId = req.user.id;
-    const {startDate, endDate} = req.body
+    const { startDate, endDate } = req.body
 
     const checkBooking = await Booking.findByPk(bookingId)
 
@@ -113,9 +113,9 @@ router.put("/:bookingId", requireAuth, validateBooking, async(req,res,next) => {
     }
 
     const checkBookingAuthorization = await Booking.findByPk(bookingId)
-    console.log("checkingbookingauthor",checkBookingAuthorization.userId)
+    // console.log("checkingbookingauthor",checkBookingAuthorization.userId)
 
-    if  (checkBookingAuthorization.userId !== userId) {
+    if (checkBookingAuthorization.userId !== userId) {
         // const err = new Error("Unauthorized access")
         // err.title = 'Unauthorized';
         // err.errors = ['Unauthorized'];
@@ -129,23 +129,25 @@ router.put("/:bookingId", requireAuth, validateBooking, async(req,res,next) => {
     }
 
     //This block will check if there's any conflicting bookings
-    const checkConflictBooking = await Booking.findAll({where:{
-        [Op.or] : [
+    const checkConflictBooking = await Booking.findAll({
+        where: {
+            [Op.or]: [
 
-                {startDate: {[Op.between]: [startDate,endDate]}},
-                {endDate: {[Op.between]: [startDate,endDate]}},
+                { startDate: { [Op.between]: [startDate, endDate] } },
+                { endDate: { [Op.between]: [startDate, endDate] } },
 
-        ]
-    }})
+            ]
+        }
+    })
 
     //Error response: Can't edit a booking that's past the end date
-    console.log("Date now", Date.now())
-    console.log("End date", endDate)
-    console.log(Date.now() > endDate)
+    // console.log("Date now", Date.now())
+    // console.log("End date", endDate)
+    // console.log(Date.now() > endDate)
 
     const endDateJS = new Date(endDate)
 
-    console.log(Date.now() > endDateJS)
+    // console.log(Date.now() > endDateJS)
     if (Date.now() > endDateJS) {
         return res.status(403).json({
             message: "Past bookings can't be modified",
@@ -154,7 +156,7 @@ router.put("/:bookingId", requireAuth, validateBooking, async(req,res,next) => {
     }
 
     // Error response: Booking conflict
-    if(checkConflictBooking.length > 0) {
+    if (checkConflictBooking.length > 0) {
         return res.status(403).json({
             message: "Sorry, this spot is already booked for the specified dates",
             statusCode: 403,
@@ -166,71 +168,71 @@ router.put("/:bookingId", requireAuth, validateBooking, async(req,res,next) => {
     }
 
     else {
-    await checkBooking.update({
-        startDate,
-        endDate
-    })
+        await checkBooking.update({
+            startDate,
+            endDate
+        })
 
-    res.status(200).json(checkBooking)
+        res.status(200).json(checkBooking)
     }
 })
 
 // Delete a Booking #23
-router.delete('/:bookingId', requireAuth, async(req,res,next) => {
-    const {bookingId} = req.params
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const { bookingId } = req.params
     const userId = req.user.id;
     const checkBooking = await Booking.findByPk(bookingId)
 
-        //Error Response: Couldn't find a booking with a specified Id
-        if (!checkBooking) {
-            return res.status(404).json({
-                message: "Booking couldn't be found",
-                statusCode: 404
-            })
-        }
+    //Error Response: Couldn't find a booking with a specified Id
+    if (!checkBooking) {
+        return res.status(404).json({
+            message: "Booking couldn't be found",
+            statusCode: 404
+        })
+    }
 
-        const checkBookingAuthorization = await Booking.findByPk(bookingId)
-        console.log("checkingbookingauthor",checkBookingAuthorization.userId)
+    const checkBookingAuthorization = await Booking.findByPk(bookingId)
+    // console.log("checkingbookingauthor", checkBookingAuthorization.userId)
 
-        if (checkBookingAuthorization.userId !== userId) {
-            const err = new Error("Forbidden")
-            // err.title = 'Unauthorized';
-            // err.errors = ['Unauthorized'];
-            err.status = 403;
-            return next(err);
-        }
+    if (checkBookingAuthorization.userId !== userId) {
+        const err = new Error("Forbidden")
+        // err.title = 'Unauthorized';
+        // err.errors = ['Unauthorized'];
+        err.status = 403;
+        return next(err);
+    }
 
-        // console.log("CheckBookingAuthorization.startDate", checkBookingAuthorization.startDate)
-        // const selectedStartDate = new Date(checkBookingAuthorization.startDate)
-        // selectedStartDate.setHours(1,1,1,1)
-        // const now = new Date()
-        // now.setHours(1, 1, 1, 1)
-        // console.log("Current date", now)
-        // console.log("Selected Start date",selectedStartDate)
-        // if (now <= selectedStartDate) { //Put a pin on this
-        //     res.status(403).json({
-        //         message: "Bookings that have been started can't be deleted",
-        //         statusCode: 403
-        //     })
-        // }
+    // console.log("CheckBookingAuthorization.startDate", checkBookingAuthorization.startDate)
+    // const selectedStartDate = new Date(checkBookingAuthorization.startDate)
+    // selectedStartDate.setHours(1,1,1,1)
+    // const now = new Date()
+    // now.setHours(1, 1, 1, 1)
+    // console.log("Current date", now)
+    // console.log("Selected Start date",selectedStartDate)
+    // if (now <= selectedStartDate) { //Put a pin on this
+    //     res.status(403).json({
+    //         message: "Bookings that have been started can't be deleted",
+    //         statusCode: 403
+    //     })
+    // }
 
-        const selectedStartDate = new Date(checkBookingAuthorization.startDate)
-        // const selectedEndDate = new Date(checkBookingAuthorization.endDate)
-        // selectedEndDate.setUTCHours(0, 0, 0, 0)
-        // selectedStartDate.setUTCHours(0, 0, 0, 0) // set hours to 0
-        const now = new Date()
+    const selectedStartDate = new Date(checkBookingAuthorization.startDate)
+    // const selectedEndDate = new Date(checkBookingAuthorization.endDate)
+    // selectedEndDate.setUTCHours(0, 0, 0, 0)
+    // selectedStartDate.setUTCHours(0, 0, 0, 0) // set hours to 0
+    const now = new Date()
 
-        // console.log("Current date", now.toISOString())
-        // console.log("Selected Start date",selectedStartDate.toISOString())
-        // Old code: now >= selectedStartDate && now <= selectedEndDate
-        if (now >= selectedStartDate) {
-            return res.status(403).json({
-                message: "Bookings that have been started can't be deleted",
-                statusCode: 403
-            })
-        }
+    // console.log("Current date", now.toISOString())
+    // console.log("Selected Start date",selectedStartDate.toISOString())
+    // Old code: now >= selectedStartDate && now <= selectedEndDate
+    if (now >= selectedStartDate) {
+        return res.status(403).json({
+            message: "Bookings that have been started can't be deleted",
+            statusCode: 403
+        })
+    }
 
-        else {
+    else {
         await checkBookingAuthorization.destroy()
         return res.status(200).json({
             message: "Successfully deleted",

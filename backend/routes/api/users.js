@@ -16,13 +16,13 @@ const validateSignup = [
     .isEmail()
     .withMessage('Invalid email'),
   check('username') //NEW! Checks if username exists
-    .exists({checkFalsy: true})
+    .exists({ checkFalsy: true })
     .withMessage("Username is required"),
   check('firstName') //NEW! Checks if firstName exists
-    .exists({checkFalsy: true})
+    .exists({ checkFalsy: true })
     .withMessage("First Name is required"),
   check("lastName") //NEW! Checks if lastName exists
-    .exists({checkFalsy: true})
+    .exists({ checkFalsy: true })
     .withMessage("Last Name is required"),
   // check('username') //Check if the user is at least 4 characters
   //   .exists({ checkFalsy: true })
@@ -45,20 +45,20 @@ router.post(
   validateSignup,
   async (req, res) => {
 
-    console.log("Look over here!")
+    // console.log("Look over here!")
 
     const { email, password, username, firstName, lastName } = req.body;
 
     const emailCheck = await User.findOne({
-      where: {email: email}
+      where: { email: email }
     })
 
     const usernameCheck = await User.findOne({
-      where: {username: username}
+      where: { username: username }
     })
 
-    if(emailCheck) { //Validation check if a user with the specified email exists
-      console.log(emailCheck)
+    if (emailCheck) { //Validation check if a user with the specified email exists
+      // console.log(emailCheck)
       const err = new Error("User already exists")
       err.status = 403
       return res.json({
@@ -69,7 +69,7 @@ router.post(
         }
       })
     }
-    else if (usernameCheck){ //Validation check if a user has a duplicated username
+    else if (usernameCheck) { //Validation check if a user has a duplicated username
       const err = new Error("User already exists")
       err.status = 403;
       return res.json({
@@ -81,19 +81,19 @@ router.post(
       })
     }
     else {
-    const user = await User.signup({ email, username, password, firstName, lastName });
-    const newToken = await setTokenCookie(res, user);
-    console.log(user.email)
-    console.log(newToken)
-    return res.json({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-      token: newToken
-    });
-  }
+      const user = await User.signup({ email, username, password, firstName, lastName });
+      const newToken = await setTokenCookie(res, user);
+      // console.log(user.email)
+      // console.log(newToken)
+      return res.json({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username,
+        token: newToken
+      });
+    }
 
 
   }
