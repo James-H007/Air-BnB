@@ -1,0 +1,43 @@
+.profile-dropdown {
+    position: absolute;
+    background-color: rgb(19, 18, 18);
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    min-width: 150px;
+    list-style-type: none;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 5px;
+
+}
+
+.profile-dropdown.hidden {
+    display: none;
+}
+
+.profile-dropdown li {
+    padding: 10px;
+    text-align: left;
+}
+
+.profile-dropdown li:not(:last-child) {
+    border-bottom: 1px dotted #ccc;
+}
+
+.profile-dropdown button {
+    background: transparent;
+    border: none;
+    color: #ececec;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.profile-dropdown button:hover {
+    color: #2ab1ff;
+}
+
+.fas.fa-user-circle {
+    font-size: 5em;
+    cursor: pointer;
+
+}
