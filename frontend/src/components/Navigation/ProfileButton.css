@@ -1,13 +1,15 @@
 .profile-dropdown {
     position: absolute;
     background-color: rgb(19, 18, 18);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: monospace;
     color: white;
     min-width: 150px;
     list-style-type: none;
     padding: 10px;
     border-radius: 4px;
     margin: 5px;
+    right: 0px;
+    top: 75px;
 
 }
 
@@ -39,5 +41,4 @@
 .fas.fa-user-circle {
     font-size: 5em;
     cursor: pointer;
-
 }

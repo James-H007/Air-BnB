@@ -1,0 +1,19 @@
+li {
+    list-style-type: none;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #2463E0;
+    position: fixed;
+    top: 0px;
+    height: 80px;
+    width: 97%;
+}
+
+.logo {
+    height: 100%;
+    width: 100%;
+}
