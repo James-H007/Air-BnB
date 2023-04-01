@@ -8,7 +8,8 @@
     background-color: lightgray;
     margin: auto;
     margin-top: 15em;
-    border: 1px solid black
+    border: 1px solid black;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
 .login-text {
@@ -23,13 +24,17 @@
 }
 
 .login-button {
-    background-color: rgb(48, 46, 46);
+    background-color: #2463E0;
     color: white;
     font-weight: bold;
     border: none;
     margin-top: 2em;
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
 }
 
 .login-button:hover {
-    background-color: lightgray;
+    background-color: rgb(74, 77, 121);
+    cursor: pointer;
 }

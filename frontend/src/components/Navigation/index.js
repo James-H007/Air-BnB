@@ -63,7 +63,7 @@ function Navigation({ isLoaded }) {
         );
     } else {
         sessionLinks = (
-            <li className='session-link'>
+            <li className='no-session-link'>
                 <NavLink to="/login">Log In</NavLink>
                 <NavLink to="/signup">Sign Up</NavLink>
             </li>
@@ -84,3 +84,30 @@ function Navigation({ isLoaded }) {
 }
 
 export default Navigation;
+
+
+//============= Newer Modal introduction (has problems)
+// import React from 'react';
+// import { NavLink } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import ProfileButton from './ProfileButton';
+// import './Navigation.css';
+
+// function Navigation({ isLoaded }) {
+//     const sessionUser = useSelector(state => state.session.user);
+
+//     return (
+//         <ul>
+//             <li>
+//                 <NavLink exact to="/">Home</NavLink>
+//             </li>
+//             {isLoaded && (
+//                 <li>
+//                     <ProfileButton user={sessionUser} />
+//                 </li>
+//             )}
+//         </ul>
+//     );
+// }
+
+// export default Navigation;
