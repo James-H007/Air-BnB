@@ -11,6 +11,7 @@ li {
     top: 0px;
     height: 80px;
     width: 97%;
+    z-index: -2;
 }
 
 .logo {

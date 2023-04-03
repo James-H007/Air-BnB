@@ -11,13 +11,14 @@ function OpenModalMenuItem({
     const { setModalContent, setOnModalClose } = useModal();
 
     const onClick = () => {
+
+        if (onModalClose) setOnModalClose(onModalClose);
+        setModalContent(modalComponent);
+        if (onItemClick) onItemClick();
         console.log("Open Modal Menu Item has been clicked")
         console.log("itemText", itemText)
         console.log('OnItemClick', onItemClick)
         console.log("On modal Close", onModalClose)
-        if (onModalClose) setOnModalClose(onModalClose);
-        setModalContent(modalComponent);
-        if (onItemClick) onItemClick();
     };
 
     return (
