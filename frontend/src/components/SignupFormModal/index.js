@@ -52,6 +52,7 @@ function SignupFormPage() {
 
     return (
         <form onSubmit={handleSubmit} className="signup-form">
+            <div className="title">Sign Up</div>
             <ul className="errors">
                 {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
@@ -59,7 +60,7 @@ function SignupFormPage() {
                 {Object.values(validationErrors).map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
             <label className="signup-text">
-                Email
+
                 <input
                     type="text"
                     value={email}
@@ -70,7 +71,7 @@ function SignupFormPage() {
                 />
             </label>
             <label className="signup-text">
-                Username
+
                 <input
                     type="text"
                     value={username}
@@ -81,7 +82,7 @@ function SignupFormPage() {
                 />
             </label>
             <label className="signup-text">
-                First Name
+
                 <input
                     type="text"
                     value={firstName}
@@ -92,7 +93,7 @@ function SignupFormPage() {
                 />
             </label>
             <label className="signup-text">
-                Last Name
+
                 <input
                     type="text"
                     value={lastName}
@@ -103,7 +104,7 @@ function SignupFormPage() {
                 />
             </label>
             <label className="signup-text">
-                Password
+
                 <input
                     type="password"
                     value={password}
@@ -114,7 +115,7 @@ function SignupFormPage() {
                 />
             </label>
             <label className="signup-text">
-                Confirm Password
+
                 <input
                     type="password"
                     value={confirmPassword}

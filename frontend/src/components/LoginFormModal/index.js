@@ -55,6 +55,7 @@ function LoginFormPage() {
     return (
         <>
             <form onSubmit={handleSubmit} className="login-form">
+                <div className='title'>Login</div>
                 <ul className='invalid-cred'>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
@@ -62,20 +63,20 @@ function LoginFormPage() {
                     {Object.values(validationErrors).map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <label className='login-text'>
-                    Username or Email
                     <input
                         type="text"
-                        placeholder='Enter in a username'
+                        placeholder='Username or Email'
                         value={credential}
                         onChange={(e) => setCredential(e.target.value)}
                         required
+                        className='login-input'
                     />
                 </label>
                 <label className='login-text'>
-                    Password
+
                     <input
                         type="password"
-                        placeholder='Enter in a password'
+                        placeholder='Password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required

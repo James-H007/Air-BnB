@@ -1,3 +1,7 @@
+.title {
+    color: black;
+}
+
 .errors {
     color: #ff0000;
     display: flex;
@@ -30,6 +34,8 @@
 .signup-input {
     font-family: 'Rubik', sans-serif;
     margin-left: 1em;
+    width: 300px;
+    height: 17px;
 }
 
 .signup-button {
@@ -38,10 +44,12 @@
     color: white;
     /* font-weight: bold; */
     border: none;
-    margin-top: 2em;
+    margin-top: 2px;
     height: 50px;
     width: 100px;
     border-radius: 5px;
+    width: 300px;
+    box-shadow: 5px 2px black;
 }
 
 .signup-button:hover {

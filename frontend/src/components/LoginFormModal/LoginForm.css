@@ -1,3 +1,11 @@
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    position: absolute;
+    top: 5em;
+    font-family: 'Rubik';
+}
+
 .login-form {
     display: flex;
     font-family: 'Rubik', sans-serif;
@@ -25,15 +33,19 @@
 
 .login-text {
     font-family: 'Rubik', sans-serif;
+    display: flex;
     margin: 5px;
     padding: 5px;
     padding-right: 5;
     font-weight: bold;
+    flex-direction: row;
 }
 
 .login-input {
     font-family: 'Rubik', sans-serif;
     margin-left: 1em;
+    width: 300px;
+    height: 20px;
 }
 
 .login-button {
