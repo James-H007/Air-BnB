@@ -1,7 +1,15 @@
+.errors {
+    color: #ff0000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .signup-form {
     display: flex;
-    height: 20em;
-    width: 25em;
+    font-family: 'Rubik', sans-serif;
+    height: 30em;
+    width: 26em;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -12,6 +20,7 @@
 }
 
 .signup-text {
+    font-family: 'Rubik', sans-serif;
     margin: 5px;
     padding: 5px;
     padding-right: 5;
@@ -19,17 +28,33 @@
 }
 
 .signup-input {
+    font-family: 'Rubik', sans-serif;
     margin-left: 1em;
 }
 
 .signup-button {
-    background-color: rgb(48, 46, 46);
+    background-color: #2463E0;
+    font-family: 'Rubik', sans-serif;
     color: white;
-    font-weight: bold;
+    /* font-weight: bold; */
     border: none;
     margin-top: 2em;
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
 }
 
 .signup-button:hover {
     background-color: lightgray;
+    cursor: pointer;
+}
+
+
+.signup-button:disabled {
+    background-color: gray;
+    color: lightgray;
+}
+
+.signup-button:disabled:hover {
+    cursor: default;
 }

@@ -59,9 +59,13 @@ router.post(
 
     if (emailCheck) { //Validation check if a user with the specified email exists
       // console.log(emailCheck)
+      // errors: {
+      //   email: "User with that email already exists"
+      // }
       const err = new Error("User already exists")
       err.status = 403
-      return res.json({
+      err.errors = ["User with that email already exists"]
+      return res.status(403).json({
         message: err.message,
         statusCode: err.status,
         errors: {
@@ -72,7 +76,8 @@ router.post(
     else if (usernameCheck) { //Validation check if a user has a duplicated username
       const err = new Error("User already exists")
       err.status = 403;
-      return res.json({
+      err.errors = ["User with that username already exists"]
+      return res.status(403).json({
         message: err.message,
         statusCode: err.status,
         errors: {

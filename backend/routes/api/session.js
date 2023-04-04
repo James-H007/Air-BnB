@@ -21,66 +21,67 @@ const validateLogin = [
   handleValidationErrors
 ];
 
-  // Log in
-  router.post(
-    '/',
-    validateLogin,
-    async (req, res, next) => {
-      const { credential, password } = req.body;
+// Log in
+router.post(
+  '/',
+  validateLogin,
+  async (req, res, next) => {
+    const { credential, password } = req.body;
 
-      const user = await User.login({ credential, password });
+    const user = await User.login({ credential, password });
 
-      if (!user) {
-        const err = new Error('Invalid credentials'); //Edited the body for invalid credentials
-        err.status = 401;
-        // err.title = 'Login failed';
-        // err.errors = ['The provided credentials were invalid.'];
-        // return next(err);
-        return res.status(401).json({
-          message: err.message,
-          statusCode: err.status
-        })
-      }
+    if (!user) {
+      const err = new Error('Invalid credentials'); //Edited the body for invalid credentials
+      err.status = 401;
+      err.title = 'Login failed';
+      err.errors = ['The provided credentials were invalid.'];
+      // return next(err);
+      return res.status(401).json({
+        message: err.message,
+        statusCode: err.status,
+        errors: err.errors
+      })
+    }
 
-      else{
+    else {
 
       const token = await setTokenCookie(res, user);
 
-      const {id,username,email,firstName,lastName} = user
+      const { id, username, email, firstName, lastName } = user
 
       return res.json({
-        user: {id, username, email, firstName, lastName}
+        user: { id, username, email, firstName, lastName }
       });
-      }
     }
-  );
+  }
+);
 
 
 // Log out
 router.delete(
-    '/',
-    (req, res) => {
-      res.clearCookie('token');
-      return res.json({ message: 'success' });
-    }
-  );
+  '/',
+  (req, res) => {
+    res.clearCookie('token');
+    return res.json({ message: 'success' });
+  }
+);
 
 // Restore session user a.k.a Get the current user
 router.get(
-    '/',
-    requireAuth,
-    restoreUser,
-    (req, res) => {
-      const { user } = req;
-      // console.log(user.toSafeObject())
+  '/',
+  requireAuth,
+  restoreUser,
+  (req, res) => {
+    const { user } = req;
+    // console.log(user.toSafeObject())
 
-      if (user) {
-        return res.json({
-          user: user.toSafeObject()
-        });
-      } else return res.json({});
-    }
-  );
+    if (user) {
+      return res.json({
+        user: user.toSafeObject()
+      });
+    } else return res.json({});
+  }
+);
 
 
 
