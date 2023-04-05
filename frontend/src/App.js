@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import * as spotActions from "./store/spots"
 import Navigation from "./components/Navigation";
 import SpotList from "./components/Spots";
+import './app.css'
 
 // function App() {
 //   return (
@@ -73,20 +74,22 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route path="/login">
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route exact path="/">
-            <SpotList />
-          </Route>
-        </Switch>
-      )}
+      <div className="website">
+        <Navigation isLoaded={isLoaded} />
+        {isLoaded && (
+          <Switch>
+            <Route path="/login">
+              <LoginFormPage />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route exact path="/">
+              <SpotList />
+            </Route>
+          </Switch>
+        )}
+      </div>
     </>
   );
 }
