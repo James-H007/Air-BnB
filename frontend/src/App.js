@@ -4,7 +4,9 @@ import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormModal";
 import SignupFormPage from "./components/SignupFormModal";
 import * as sessionActions from "./store/session";
+import * as spotActions from "./store/spots"
 import Navigation from "./components/Navigation";
+import SpotList from "./components/Spots";
 
 // function App() {
 //   return (
@@ -79,6 +81,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/">
+            <SpotList />
           </Route>
         </Switch>
       )}

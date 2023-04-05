@@ -15,10 +15,10 @@ function OpenModalMenuItem({
         if (onModalClose) setOnModalClose(onModalClose);
         setModalContent(modalComponent);
         if (onItemClick) onItemClick();
-        console.log("Open Modal Menu Item has been clicked")
-        console.log("itemText", itemText)
-        console.log('OnItemClick', onItemClick)
-        console.log("On modal Close", onModalClose)
+        // console.log("Open Modal Menu Item has been clicked")
+        // console.log("itemText", itemText)
+        // console.log('OnItemClick', onItemClick)
+        // console.log("On modal Close", onModalClose)
     };
 
     return (

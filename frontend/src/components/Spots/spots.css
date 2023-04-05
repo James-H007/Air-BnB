@@ -1,0 +1,18 @@
+.container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 800px;
+    width: 800px;
+}
+
+.spot-container {
+    height: 200px;
+    width: 100px;
+}
+
+.preview-image {
+    height: 100px;
+    width: 100px;
+}

@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     options.tableName = 'Reviews';
     return queryInterface.bulkInsert(options, [
       {
@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         // id: 3,
-        spotId: 3,
+        spotId: 4,
         userId: 3,
         review: "Turns out they did scam me. Good icebreaker story though.",
         stars: 2,
@@ -42,11 +42,11 @@ module.exports = {
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      stars: {[Op.in]: [4]}
+      stars: { [Op.in]: [4] }
     }, {});
   }
 };
