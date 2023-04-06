@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { fetchSpots } from "../../store/spots";
 import './spots.css'
 import { Tooltip } from "react-tooltip"
@@ -26,7 +26,7 @@ const SpotList = () => {
             {spots.map(({ id, name, previewImage, city, state, avgRating, price }) => (
                 <li className="major-spot-container" key={id}>
 
-                    <NavLink to={`/spots/${id}`} >
+                    <Link to={`/spots/${id}`} >
 
                         <Tooltip id={id} className="tooltip" />
                         <div className="spot-container" data-tip={name}>
@@ -44,7 +44,7 @@ const SpotList = () => {
                         <li>
                             ${price} night
                         </li>
-                    </NavLink>
+                    </Link>
 
                 </li>
             ))}

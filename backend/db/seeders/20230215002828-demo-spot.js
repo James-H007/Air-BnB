@@ -56,6 +56,7 @@ module.exports = {
         // updatedAt: new Date('2023-03-01T00:00:00')
       },
       {
+        //id:4,
         ownerId: 3,
         address: "1111 Wraith Lane",
         city: "Badlands",
@@ -76,6 +77,39 @@ module.exports = {
         name: "Luxury Deluxe",
         description: "The prices may seem high. But it's well worth it.",
         price: 2000.00
+      },
+      {
+        ownerId: 3,
+        address: "1111 Atlantic Avenue",
+        city: "Pacifica",
+        state: "Oregon",
+        lat: 3.2,
+        lng: 3.1,
+        name: "Breezy Bash",
+        description: "Cool and windy here!",
+        price: 500.00
+      },
+      {
+        ownerId: 3,
+        address: "1111 Tank Drive",
+        city: "Santo Domingo",
+        state: "California",
+        lat: 5.0,
+        lng: 1.0,
+        name: "A Normal Place",
+        description: "We won't lie. We're basic.",
+        price: 250.00
+      },
+      {
+        ownerId: 3,
+        address: "8888 XXX Avenue",
+        city: "San Francisco",
+        state: "California",
+        lat: 5.0,
+        lng: 1.0,
+        name: "Arasaka-Lite",
+        description: "Live like those at the top.",
+        price: 800.00
       }
     ], {});
 

@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import * as spotActions from "./store/spots"
 import Navigation from "./components/Navigation";
 import SpotList from "./components/Spots";
+import SpotDetails from "./components/SpotDetails";
 import './app.css'
 
 // function App() {
@@ -86,6 +87,9 @@ function App() {
             </Route>
             <Route exact path="/">
               <SpotList />
+            </Route>
+            <Route path="/spots/:id">
+              <SpotDetails />
             </Route>
           </Switch>
         )}

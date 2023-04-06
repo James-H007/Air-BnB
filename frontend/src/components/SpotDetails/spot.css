@@ -1,0 +1,21 @@
+header {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+
+.entire-spot {
+    font-family: 'Rubik';
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+}
+
+.location-info {
+    font-size: 15px;
+}
+
+.main-image {
+    height: 100%;
+    width: 300px;
+}
