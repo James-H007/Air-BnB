@@ -9,7 +9,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 const SpotList = () => {
     const dispatch = useDispatch();
     const spots = useSelector(state => state.spot.spots)
-    // console.log(spots)
+    console.log(spots)
 
     // console.log(spots);
     useEffect(() => {

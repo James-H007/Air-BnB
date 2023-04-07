@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormModal";
 import SignupFormPage from "./components/SignupFormModal";
@@ -68,10 +68,13 @@ import './app.css'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser())
     setIsLoaded(true)
   }, [dispatch])
+
+  const spots = useSelector(state => state.spot)
 
   return (
     <>
@@ -89,7 +92,7 @@ function App() {
               <SpotList />
             </Route>
             <Route path="/spots/:id">
-              <SpotDetails />
+              <SpotDetails spots={spots} />
             </Route>
           </Switch>
         )}

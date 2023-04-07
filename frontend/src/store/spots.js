@@ -6,7 +6,7 @@ const LOAD_SPOT = 'api/getSpot';
 const GET_SINGLE_SPOT = 'api/getSingleSpot'
 
 const loadSpots = (spots) => {
-    // console.log(spots)
+    console.log(spots)
     return {
         type: LOAD_SPOT,
         spots
@@ -51,6 +51,7 @@ const spotReducer = (state = initalState, action) => {
             newState = state
             console.log(newState)
             return { ...newState, spot: action.spot }
+
         default:
             return state;
     }
