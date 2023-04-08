@@ -92,7 +92,7 @@ header {
 
 .description {
     width: 65%;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .reservation {
@@ -105,7 +105,7 @@ header {
     border-radius: 5px;
     height: 35%;
     margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 20px;
 
 }
 
@@ -151,4 +151,5 @@ header {
 
 .big-review-summ {
     font-size: 25px;
+    margin-bottom: 5px;
 }

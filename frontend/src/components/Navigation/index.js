@@ -96,16 +96,24 @@ import logo from '../../images/logo.png'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
-    console.log(isLoaded)
+    // console.log(isLoaded)
     return (
         <ul className='navBar'>
             <li className='home-link'>
                 <NavLink exact to="/"><img className='logo' src={logo} alt="logo" /></NavLink>
             </li>
             {isLoaded && (
-                <li className='home-link'>
-                    <ProfileButton user={sessionUser} />
-                </li>
+                <>
+
+                    <li className='home-link'>
+                        <div className='button-container'>
+                            {sessionUser &&
+                                <NavLink to="/spots/create"><button className='new-spot-btn'> Create a New Spot</button></NavLink>
+                            }
+                            <ProfileButton user={sessionUser} />
+                        </div>
+                    </li>
+                </>
             )}
         </ul>
     );

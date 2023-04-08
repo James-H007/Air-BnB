@@ -408,9 +408,11 @@ function ProfileButton({ user }) {
 
     return (
         <>
+
             <button onClick={openMenu} className="profile-button">
                 <i className="fas fa-id-card" />
             </button>
+
             <ul className={ulClassName} ref={ulRef}>
                 {user ? (
                     <>

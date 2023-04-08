@@ -68,7 +68,6 @@ button {
     background-color: transparent;
     border: none;
     display: flex;
-    position: absolute;
-    right: 25px;
-    top: 30px;
+    margin-right: 10px;
+    margin-top: 5px;
 }

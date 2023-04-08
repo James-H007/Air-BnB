@@ -26,6 +26,7 @@ const SpotDetails = () => {
     const [subImages, setSubImages] = useState()
     const [firstName, setFirstName] = useState()
     const [lastName, setLastName] = useState()
+    const [ownerId, setOwnerId] = useState()
     // const [subImages, setSubImages] = useState([placeholder, placeholder, placeholder, placeholder])
 
 
@@ -70,6 +71,8 @@ const SpotDetails = () => {
             setSubImages(placeholders)
             setFirstName(Owner.firstName);
             setLastName(Owner.lastName);
+            setOwnerId(Owner.id)
+            console.log(Owner.id)
             setLoad(true)
         }
     }, [selectedSpot])
@@ -101,19 +104,26 @@ const SpotDetails = () => {
                         <div className="reservation">
                             <div className="reserve-info">
                                 <p className="price">${price} night</p>
-                                <p className="review-prev">⭐ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} reviews</p>
+                                {numReviews > 0 && <p className="review-prev">⭐ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} {numReviews > 1 ? "reviews" : "review"}</p>}
+                                {numReviews === 0 && <p className="review-prev">⭐ {avgStarRating ? avgStarRating.toFixed(2) : "New"} </p>}
                             </div>
                             <button onClick={handleAlert} className="reserve-button">Reserve</button>
                         </div>
                     </section>
 
                     <section>
-                        <div className="big-review-summ">★ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} reviews</div>
-                    </section>
+                        {numReviews > 0 &&
+                            < div className="big-review-summ">★ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} {numReviews > 1 ? "reviews" : "review"}</div>
+                        }
+                        {
+                            numReviews === 0 &&
+                            < div className="big-review-summ">★ {avgStarRating ? avgStarRating.toFixed(2) : "New"}</div>
+                        }
+                    </section >
                     <section>
-                        <SpotReviews id={id} />
+                        <SpotReviews id={id} ownerId={ownerId} />
                     </section>
-                </div>
+                </div >
             }
         </>
     )
