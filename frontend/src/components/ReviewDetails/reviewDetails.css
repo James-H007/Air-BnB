@@ -1,0 +1,20 @@
+.comment-section {
+    margin: 2px;
+}
+
+.indiv-review {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.first-name {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+.year {
+    opacity: .5;
+    font-size: 20px;
+    margin-bottom: 0;
+}

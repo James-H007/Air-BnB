@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import { fetchSingleSpot } from "../../store/spots";
 import './spot.css'
+import SpotReviews from "../ReviewDetails";
 
 
 const SpotDetails = () => {
     const dispatch = useDispatch();
-    const placeholder = "https://t3.ftcdn.net/jpg/04/62/93/66/360_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg"
+    const placeholder = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
     const { id } = useParams();
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
@@ -23,12 +24,18 @@ const SpotDetails = () => {
     const [load, setLoad] = useState(false)
     const placeholders = [placeholder, placeholder, placeholder, placeholder]
     const [subImages, setSubImages] = useState()
+    const [firstName, setFirstName] = useState()
+    const [lastName, setLastName] = useState()
     // const [subImages, setSubImages] = useState([placeholder, placeholder, placeholder, placeholder])
 
 
     console.log(id)
     const selectedSpot = useSelector(state => state.spot.spot)
     console.log(selectedSpot)
+
+    const handleAlert = () => {
+        alert("Feature Coming Soon...")
+    }
 
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
@@ -39,7 +46,7 @@ const SpotDetails = () => {
     useEffect(() => {
         if (selectedSpot) {
 
-            const { name, address, city, state, country, price, description, avgStarRating, numReviews, SpotImages } = selectedSpot;
+            const { name, address, city, state, country, price, description, avgStarRating, numReviews, SpotImages, Owner } = selectedSpot;
             setName(name);
             setAddress(address)
             setCity(city)
@@ -61,6 +68,8 @@ const SpotDetails = () => {
             }
 
             setSubImages(placeholders)
+            setFirstName(Owner.firstName);
+            setLastName(Owner.lastName);
             setLoad(true)
         }
     }, [selectedSpot])
@@ -86,6 +95,24 @@ const SpotDetails = () => {
                             </div>
                         </section>
                     </div>
+                    <p className="names">Hosted By {firstName} {lastName}</p>
+                    <section className="key-info">
+                        <p className="description">{description}</p>
+                        <div className="reservation">
+                            <div className="reserve-info">
+                                <p className="price">${price} night</p>
+                                <p className="review-prev">⭐ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} reviews</p>
+                            </div>
+                            <button onClick={handleAlert} className="reserve-button">Reserve</button>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div className="big-review-summ">★ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} reviews</div>
+                    </section>
+                    <section>
+                        <SpotReviews id={id} />
+                    </section>
                 </div>
             }
         </>

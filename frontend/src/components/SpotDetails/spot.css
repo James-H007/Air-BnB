@@ -14,13 +14,13 @@ header {
 }
 
 .location-info {
-    font-size: 15px;
+    font-size: 18px;
     margin-bottom: 10px;
 }
 
 .image-container {
     width: 100%;
-    height: 300px;
+    height: 350px;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -55,19 +55,100 @@ header {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    margin-left: 5px;
 }
 
 .sub-image {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    margin-top: 20px;
+
+    margin-right: 8px;
+    margin-left: 8px;
 }
 
 .small-img {
     width: 100%;
-    height: 100%;
+    height: 90%;
     overflow: hidden;
     object-fit: cover;
     border-radius: 10px;
-    margin: 2px;
+
+}
+
+.names {
+    font-size: 25px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.key-info {
+    display: flex;
+    flex-direction: row;
+    height: 300px;
+    border-bottom: 2px solid black;
+}
+
+.description {
+    width: 65%;
+    margin-right: 10px;
+}
+
+.reservation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1em;
+    width: 30%;
+    border: 2px solid black;
+    border-radius: 5px;
+    height: 35%;
+    margin-right: 10px;
+    margin-left: 10px;
+
+}
+
+.reserve-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 30%;
+
+}
+
+.reserve-button {
+    background-color: black;
+    border: none;
+    color: white;
+    height: 40px;
+    border-radius: 5px;
+    margin-top: 5px;
+
+}
+
+.reserve-button:hover {
+    cursor: pointer;
+    color: yellow
+}
+
+
+
+.price {
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.review-prev {
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+
+.big-review-summ {
+    font-size: 25px;
 }

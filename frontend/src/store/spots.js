@@ -6,7 +6,7 @@ const LOAD_SPOT = 'api/getSpot';
 const GET_SINGLE_SPOT = 'api/getSingleSpot'
 
 const loadSpots = (spots) => {
-    console.log(spots)
+    // console.log(spots)
     return {
         type: LOAD_SPOT,
         spots
@@ -32,7 +32,7 @@ export const fetchSpots = () => async (dispatch) => {
 export const fetchSingleSpot = (id) => async (dispatch) => {
     const response = await fetch(`/api/spots/${id}`);
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
     dispatch(getSingleSpot(data))
     return
 }
@@ -49,7 +49,7 @@ const spotReducer = (state = initalState, action) => {
             return { ...state, spots: [...action.spots] }
         case GET_SINGLE_SPOT:
             newState = state
-            console.log(newState)
+            // console.log(newState)
             return { ...newState, spot: action.spot }
 
         default:

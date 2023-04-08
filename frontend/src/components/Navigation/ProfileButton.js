@@ -368,6 +368,8 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+
+
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
@@ -406,8 +408,8 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <button onClick={openMenu}>
-                <i className="fas fa-user-circle" />
+            <button onClick={openMenu} className="profile-button">
+                <i className="fas fa-id-card" />
             </button>
             <ul className={ulClassName} ref={ulRef}>
                 {user ? (

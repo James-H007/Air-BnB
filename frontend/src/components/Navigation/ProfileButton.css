@@ -14,8 +14,8 @@ button {
     padding: 10px;
     border-radius: 4px;
     margin: 5px;
-    right: 0px;
-    top: 75px;
+    right: 15px;
+    top: 100px;
 
 }
 
@@ -54,4 +54,21 @@ button {
     font-size: 5em;
     cursor: pointer;
     right: 2px;
+}
+
+.fas.fa-id-card {
+    font-size: 5em;
+    cursor: pointer;
+    right: 5px;
+    color: white;
+    top: 5px;
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    position: absolute;
+    right: 25px;
+    top: 30px;
 }
