@@ -44,39 +44,104 @@
 
 // export default Navigation;
 
+// import React from 'react';
+// import { NavLink } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import ProfileButton from './ProfileButton';
+// import './Navigation.css';
+// import logo from '../../images/logo.png'
+
+// function Navigation({ isLoaded }) {
+//     const sessionUser = useSelector(state => state.session.user);
+
+//     let sessionLinks;
+//     if (sessionUser) {
+//         sessionLinks = (
+//             <li className='session-link'>
+//                 <ProfileButton user={sessionUser} />
+//             </li>
+//         );
+//     } else {
+//         sessionLinks = (
+//             <li className='no-session-link'>
+//                 <NavLink to="/login">Log In</NavLink>
+//                 <NavLink to="/signup">Sign Up</NavLink>
+//             </li>
+//         );
+//     }
+
+//     return (
+//         <>
+//             <ul className="navBar">
+//                 <li className='home-link'>
+//                     {/* <NavLink exact to="/">Home</NavLink> */}
+//                     <NavLink exact to="/"><img className='logo' src={logo} alt="logo" /></NavLink>
+//                 </li>
+//                 {isLoaded && sessionLinks}
+//             </ul>
+//         </>
+//     );
+// }
+
+// export default Navigation;
+
+
+//============= Newer Modal introduction (has problems)
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import logo from '../../images/logo.png'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
-
-    let sessionLinks;
-    if (sessionUser) {
-        sessionLinks = (
-            <li>
-                <ProfileButton user={sessionUser} />
-            </li>
-        );
-    } else {
-        sessionLinks = (
-            <li>
-                <NavLink to="/login">Log In</NavLink>
-                <NavLink to="/signup">Sign Up</NavLink>
-            </li>
-        );
-    }
-
+    // console.log(isLoaded)
     return (
-        <ul>
-            <li>
-                <NavLink exact to="/">Home</NavLink>
+        <ul className='navBar'>
+            <li className='home-link'>
+                <NavLink exact to="/"><img className='logo' src={logo} alt="logo" /></NavLink>
             </li>
-            {isLoaded && sessionLinks}
+            {isLoaded && (
+                <>
+
+                    <li className='home-link'>
+                        <div className='button-container'>
+                            {sessionUser &&
+                                <NavLink to="/spots/create"><button className='new-spot-btn'> Create a New Spot</button></NavLink>
+                            }
+                            <ProfileButton user={sessionUser} />
+                        </div>
+                    </li>
+                </>
+            )}
         </ul>
     );
 }
 
 export default Navigation;
+
+// import React from 'react';
+// import { NavLink } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import ProfileButton from './ProfileButton';
+// import './Navigation.css';
+
+// function Navigation({ isLoaded }) {
+//     const sessionUser = useSelector(state => state.session.user);
+
+//     return (
+//         <ul>
+//             <li>
+//                 <NavLink exact to="/">Home</NavLink>
+//             </li>
+//             {isLoaded && (
+//                 <li>
+//                     <ProfileButton user={sessionUser} />
+//                 </li>
+//             )}
+//         </ul>
+//     );
+// }
+
+// export default Navigation;

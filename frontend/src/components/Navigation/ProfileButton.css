@@ -1,13 +1,21 @@
+button {
+    right: 10px;
+    font-family: 'Rubik', sans-serif;
+}
+
 .profile-dropdown {
     position: absolute;
     background-color: rgb(19, 18, 18);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Rubik', sans-serif;
+    /* font-weight: bold; */
     color: white;
     min-width: 150px;
     list-style-type: none;
     padding: 10px;
     border-radius: 4px;
     margin: 5px;
+    right: 15px;
+    top: 100px;
 
 }
 
@@ -18,6 +26,12 @@
 .profile-dropdown li {
     padding: 10px;
     text-align: left;
+
+}
+
+.profile-dropdown li:hover {
+    color: #fcff2e;
+    cursor: pointer;
 }
 
 .profile-dropdown li:not(:last-child) {
@@ -33,11 +47,27 @@
 }
 
 .profile-dropdown button:hover {
-    color: #2ab1ff;
+    color: #fcff2e;
 }
 
 .fas.fa-user-circle {
     font-size: 5em;
     cursor: pointer;
+    right: 2px;
+}
 
+.fas.fa-id-card {
+    font-size: 5em;
+    cursor: pointer;
+    right: 5px;
+    color: white;
+    top: 5px;
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    margin-right: 10px;
+    margin-top: 5px;
 }

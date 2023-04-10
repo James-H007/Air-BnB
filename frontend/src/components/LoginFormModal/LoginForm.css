@@ -1,0 +1,104 @@
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    position: absolute;
+    top: 5em;
+    font-family: 'Rubik';
+}
+
+.login-form {
+    display: flex;
+    font-family: 'Rubik', sans-serif;
+    height: 20em;
+    width: 25em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgray;
+    margin: auto;
+    margin-top: 15em;
+    border: 1px solid black;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    border-radius: 5px;
+}
+
+.buttons {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 70%;
+}
+
+.login-text {
+    font-family: 'Rubik', sans-serif;
+    display: flex;
+    margin: 5px;
+    padding: 5px;
+    padding-right: 5;
+    font-weight: bold;
+    flex-direction: row;
+}
+
+.login-input {
+    font-family: 'Rubik', sans-serif;
+    margin-left: 1em;
+    width: 300px;
+    height: 20px;
+}
+
+.login-button {
+    background-color: #2463E0;
+    font-family: 'Rubik', sans-serif;
+    color: white;
+    /* font-weight: bold; */
+    border: none;
+    margin-top: 2em;
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.login-button:hover {
+    background-color: rgb(74, 77, 121);
+    cursor: pointer;
+}
+
+.login-button:disabled {
+    background-color: gray;
+    color: white;
+}
+
+.login-button:disabled:hover {
+    cursor: default;
+}
+
+.validation-errors {
+    color: red;
+
+}
+
+.invalid-cred {
+    color: red;
+    font-weight: bold;
+    margin-right: 10%;
+}
+
+.demo-login {
+    background-color: #2463E0;
+    font-family: 'Rubik', sans-serif;
+    color: white;
+    /* font-weight: bold; */
+    border: none;
+    margin-top: 2em;
+    margin-left: 10px;
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.demo-login:hover {
+    background-color: rgb(74, 77, 121);
+    cursor: pointer;
+}
