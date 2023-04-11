@@ -1,3 +1,98 @@
-div {
-    color: white
+h2,
+h3,
+h4 {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+h2 {
+    font-size: 35px;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+h4 {
+    font-size: 12px;
+}
+
+.entire-spot-creation {
+    font-family: 'Rubik';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.spot-creation-start {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.spot-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.spot-description {
+    text-align: left;
+    max-width: 600px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.spot-text {
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-top: 3px;
+}
+
+.city-state {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+
+}
+
+.spot-input {
+    width: 100%;
+    height: 25px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    border: 2px black solid;
+    border-radius: 8px;
+    font-family: 'Rubik';
+}
+
+.spot-text-box {
+    width: 100%;
+    height: 100px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: 2px black solid;
+    border-radius: 8px;
+    font-family: 'Rubik';
+}
+
+.spacers {
+    border-bottom: 1px solid black;
+    height: 5px;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.price-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
 }

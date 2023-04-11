@@ -8,6 +8,7 @@ import * as spotActions from "./store/spots"
 import Navigation from "./components/Navigation";
 import SpotList from "./components/Spots";
 import SpotDetails from "./components/SpotDetails";
+import CreateSpot from "./components/CreateSpot";
 import './app.css'
 
 // function App() {
@@ -91,9 +92,14 @@ function App() {
             <Route exact path="/">
               <SpotList />
             </Route>
+            <Route exact path="/spots/create">
+              <CreateSpot />
+            </Route>
             <Route path="/spots/:id">
               <SpotDetails spots={spots} />
             </Route>
+
+
           </Switch>
         )}
       </div>
