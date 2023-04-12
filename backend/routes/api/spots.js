@@ -40,6 +40,7 @@ const validateNewSpot = [
         .withMessage('Country is required'),
     check('lat')
         .exists({ checkFalsy: true })
+        .optional()
         .notEmpty()
         .custom((value) => {
             if (isNaN(parseFloat(value))) {
@@ -49,6 +50,7 @@ const validateNewSpot = [
         })
         .withMessage('Latitude is not valid'),
     check('lng')
+        .optional()
         .exists({ checkFalsy: true })
         .notEmpty()
         .custom((value) => {

@@ -1,11 +1,17 @@
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './createSpot.css'
-import { useDebugValue, useState } from 'react';
+import { useState } from 'react';
 import * as spotActions from "../../store/spots"
+import * as spotImageActions from "../../store/spotimage"
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
 
 function CreateSpot() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const placeholder = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -16,16 +22,30 @@ function CreateSpot() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState();
     const [errors, setErrors] = useState([])
+    const [validationErrors, setValidationErrors] = useState({})
+    const [previewImg, setPreviewImg] = useState({ url: placeholder, preview: true })
+    // const [firstImg, setFirstImg] = useState({ preview: false })
 
-    const handleSubmit = (e) => {
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        return dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors)
-            })
-    }
+        try {
+            const newSpot = await dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }));
+            const { id } = newSpot;
+            console.log(id)
+            console.log(newSpot);
+            await dispatch(spotImageActions.addImage(previewImg, id))
+            history.push(`/spots/${id}`);
+            // or if the URL does not include the prefix /spots, use the following line instead
+            // history.push(`/path-to-new-spot/${id}`);
+        } catch (err) {
+            console.log(err);
+            setErrors(['An error occurred. Please try again.']);
+        }
+    };
+
 
     return (
         <>
@@ -61,7 +81,7 @@ function CreateSpot() {
                         onChange={(e) => setAddress(e.target.value)}
                         required
                         className='spot-input'
-                        placeholder='Address'
+                        placeholder='Street Address'
                     />
 
                     <div className='city-state'>
@@ -91,7 +111,7 @@ function CreateSpot() {
                     <div className='spacers'></div>
 
                     <h3>Describe your place to guests</h3>
-                    <h4>Mention the best features of your space, any special amenities</h4>
+                    <h4>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</h4>
                     <textarea
                         rows={4}
                         cols={50}
@@ -104,17 +124,18 @@ function CreateSpot() {
 
                     <div className='spacers'></div>
                     <h3>Create a title for your spot</h3>
-                    <h4>Catch guests' attention with a spot title that highlights what makes your place special</h4>
+                    <h4>Catch guests' attention with a spot title that highlights what makes your place special.</h4>
                     <input
                         type='text'
                         value={name}
+                        required
                         onChange={(e) => { setName(e.target.value) }}
                         className='spot-input'
-                        placeholder='Name your Spot'
+                        placeholder='Name of your spot'
                     />
                     <div className='spacers'></div>
                     <h3>Set a base price for your spot</h3>
-                    <h4>Catch guests' attention with a spot title that highlights what makes your place special</h4>
+                    <h4>Competitive pricing can help your listing stand out and rank higher in search results.</h4>
                     <div className='price-form'>
                         <div className='dollar'>$</div>
                         <input
@@ -133,6 +154,7 @@ function CreateSpot() {
                         type='text'
                         className='spot-input'
                         placeholder='Preview Image URL'
+                        required
                     />
 
                     <input
@@ -158,6 +180,11 @@ function CreateSpot() {
                         className='spot-input'
                         placeholder='Image URL'
                     />
+                    <div className='spacers'></div>
+
+                    <div className='button-container'>
+                        <button type="submit" className="spot-button" disabled={Object.values(validationErrors).length > 0}>Create Spot</button>
+                    </div>
                 </form>
             </div>
         </>

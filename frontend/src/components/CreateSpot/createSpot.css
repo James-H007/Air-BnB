@@ -17,6 +17,10 @@ h4 {
     font-size: 12px;
 }
 
+.errors {
+    color: red;
+}
+
 .entire-spot-creation {
     font-family: 'Rubik';
     display: flex;
@@ -95,4 +99,39 @@ h4 {
     align-items: center;
     width: 100%;
     gap: 5px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.spot-button {
+    background-color: #000000;
+    font-family: 'Rubik', sans-serif;
+    color: white;
+    border: none;
+    margin-top: 2px;
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.spot-button:hover {
+    background-color: rgb(119, 119, 119);
+    cursor: pointer;
+}
+
+
+.spot-button:disabled {
+    background-color: gray;
+    color: lightgray;
+}
+
+.spot-button:disabled:hover {
+    cursor: default;
 }

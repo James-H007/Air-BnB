@@ -36,7 +36,7 @@ export const fetchSpots = () => async (dispatch) => {
     const spots = data.Spots;
     // console.log(spots)
     dispatch(loadSpots(spots))
-    return
+    return spots
 }
 
 export const fetchSingleSpot = (id) => async (dispatch) => {
@@ -44,7 +44,7 @@ export const fetchSingleSpot = (id) => async (dispatch) => {
     const data = await response.json();
     // console.log(data)
     dispatch(getSingleSpot(data))
-    return
+    return data
 }
 
 export const createSpot = (spot) => async (dispatch) => {
@@ -64,8 +64,9 @@ export const createSpot = (spot) => async (dispatch) => {
         })
     })
     const data = await response.json();
+    console.log(data)
     dispatch(makeSpot(data))
-    return
+    return data
 }
 
 const initalState = { spots: [] }
