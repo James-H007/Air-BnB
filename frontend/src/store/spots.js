@@ -63,6 +63,7 @@ export const createSpot = (spot) => async (dispatch) => {
             price
         })
     })
+    console.log(response)
     const data = await response.json();
     console.log(data)
     dispatch(makeSpot(data))

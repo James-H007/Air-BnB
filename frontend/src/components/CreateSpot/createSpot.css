@@ -19,6 +19,9 @@ h4 {
 
 .errors {
     color: red;
+    font-size: 15px;
+    margin: 0px;
+    font-weight: none;
 }
 
 .entire-spot-creation {

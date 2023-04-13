@@ -62,7 +62,7 @@ const SpotDetails = () => {
             setPreviewImage(SpotImages.find(image => image.preview === true).url)
 
             const filteredImages = SpotImages.filter(image => image.preview === false);
-            // console.log(filteredImages)
+            console.log(filteredImages)
 
             for (let i = 0; i < filteredImages.length; i++) {
                 placeholders[i] = filteredImages[i].url
