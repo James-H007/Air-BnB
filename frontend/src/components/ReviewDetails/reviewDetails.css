@@ -24,3 +24,20 @@
     font-size: 20px;
     opacity: .7;
 }
+
+.review-button {
+    background-color: red;
+    width: 15%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Rubik';
+    color: white;
+    background-color: black;
+}
+
+.review-button:hover {
+    cursor: pointer;
+}

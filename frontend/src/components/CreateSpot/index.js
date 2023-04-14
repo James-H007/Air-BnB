@@ -20,7 +20,7 @@ function CreateSpot() {
     const [lng, setLng] = useState();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState();
+    const [price, setPrice] = useState("");
     const [errors, setErrors] = useState([])
     const [validationErrors, setValidationErrors] = useState({})
     const [previewImage, setPreviewImage] = useState({})
@@ -56,11 +56,20 @@ function CreateSpot() {
 
     }
 
-    useEffect(() => {
+    const validations = () => {
         const errors = {}
         const allImages = [previewImage, imgOne, imgTwo, imgThree, imgFour]
         const validImgs = [".jpg", "jpeg", ".png"]
         if (!previewImage.url) { errors["preview"] = "Preview image is required." }
+        if (country.length === 0) { errors["country"] = "Country is required" }
+        if (address.length === 0) { errors["address"] = "Address is required" }
+        if (city.length === 0) { errors["city"] = "City is required" }
+        if (state.length === 0) { errors["state"] = "State is required" }
+        if (description.length < 30) { errors["description"] = "Description needs to be a minimum of 30 characters" }
+        if (name.length === 0) { errors["name"] = "Name is required" }
+        if (price.length === 0) { errors["price"] = "Price is required" }
+        if (isNaN(Number(price))) { errors["price"] = "Not a valid input, please try again" }
+
 
         for (let i = 0; i < allImages.length; i++) {
             let image = allImages[i]
@@ -74,13 +83,27 @@ function CreateSpot() {
 
         setValidationErrors(errors)
 
-    }, [previewImage, imgOne, imgTwo, imgThree, imgFour])
+        if (!Object.values(validationErrors).length) { setImgCheck(false) }
+
+    }
+
+    useEffect(() => {
+        validations();
+    }, [previewImage, imgOne, imgTwo, imgThree, imgFour, country, address, city, state, description, name, price])
+
+
 
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
+
+        if (Object.values(validationErrors).length > 0) {
+            console.log(Object.values(validationErrors).length)
+            setImgCheck(true)
+            return
+        }
 
         try {
             const newSpot = await dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }));
@@ -121,7 +144,7 @@ function CreateSpot() {
                     <label className='spot-text'>
                         Country
                     </label>
-                    {errors.country && <p className='errors'>{errors.country}</p>}
+                    {imgCheck && validationErrors.country && <p className='errors'>{validationErrors.country}</p>}
                     <input
                         type="text"
                         value={country}
@@ -134,7 +157,7 @@ function CreateSpot() {
                     <label className='spot-text'>
                         Street Address
                     </label>
-                    {errors.address && <p className='errors'>{errors.address}</p>}
+                    {imgCheck && validationErrors.address && <p className='errors'>{validationErrors.address}</p>}
                     <input
                         type="text"
                         value={address}
@@ -156,7 +179,7 @@ function CreateSpot() {
                             className='spot-input'
                             placeholder='City'
                         />
-                        {errors.city && <p className='errors'>{errors.city}</p>}
+                        {imgCheck && validationErrors.city && <p className='errors'>{validationErrors.city}</p>}
                         <label className='spot-text'>
                             State
                         </label>
@@ -168,7 +191,7 @@ function CreateSpot() {
                             className='spot-input'
                             placeholder='State'
                         />
-                        {errors.state && <p className='errors'>{errors.state}</p>}
+                        {imgCheck && validationErrors.state && <p className='errors'>{validationErrors.state}</p>}
                     </div>
                     <div className='spacers'></div>
 
@@ -183,7 +206,7 @@ function CreateSpot() {
                         placeholder='Please write at least 30 characters'
                         className='spot-text-box'
                     />
-                    {errors.description && <p className='errors'>{errors.description}</p>}
+                    {imgCheck && validationErrors.description && <p className='errors'>{validationErrors.description}</p>}
                     <div className='spacers'></div>
                     <h3>Create a title for your spot</h3>
                     <h4>Catch guests' attention with a spot title that highlights what makes your place special.</h4>
@@ -195,7 +218,7 @@ function CreateSpot() {
                         className='spot-input'
                         placeholder='Name of your spot'
                     />
-                    {errors.name && <p className='errors'>{errors.name}</p>}
+                    {imgCheck && validationErrors.name && <p className='errors'>{validationErrors.name}</p>}
                     <div className='spacers'></div>
                     <h3>Set a base price for your spot</h3>
                     <h4>Competitive pricing can help your listing stand out and rank higher in search results.</h4>
@@ -209,7 +232,7 @@ function CreateSpot() {
                             placeholder='Price per night (USD)'
                         />
                     </div>
-                    {errors.price && <p className='errors'>{errors.price}</p>}
+                    {imgCheck && validationErrors.price && <p className='errors'>{validationErrors.price}</p>}
                     <div className='spacers'></div>
                     <h3>Liven up your spot with photos</h3>
                     <h4>Submit a link to at least one photo to publish your spot</h4>
@@ -222,7 +245,7 @@ function CreateSpot() {
                         onChange={(e) => handleImageInput(e.target.value, 0)}
 
                     />
-                    {validationErrors.preview && imgCheck && <p className='errors'>{validationErrors.preview}</p>}
+                    {imgCheck && validationErrors.preview && <p className='errors'>{validationErrors.preview}</p>}
                     <input
                         type='text'
                         className='spot-input'
@@ -230,7 +253,7 @@ function CreateSpot() {
                         value={imgOne.url}
                         onChange={(e) => handleImageInput(e.target.value, 1)}
                     />
-                    {validationErrors.url && imgCheck && <p className='errors'>{validationErrors.url}</p>}
+                    {imgCheck && validationErrors.url && <p className='errors'>{validationErrors.url}</p>}
                     <input
                         type='text'
                         className='spot-input'

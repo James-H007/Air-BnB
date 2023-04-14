@@ -1,0 +1,57 @@
+.entire-page {
+    height: 100%;
+    width: 100%;
+}
+
+.review-form {
+    width: 500px;
+    height: 400px;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik';
+    margin-top: 50%;
+    gap: 20px;
+    border-radius: 10px;
+}
+
+.review-desc-text {
+    border-radius: 10px;
+    font-family: 'Rubik';
+    font-size: 14px;
+    padding: 10px;
+}
+
+
+.review-submit {
+    background-color: black;
+    border: none;
+    color: white;
+    height: 40px;
+    border-radius: 5px;
+    margin-top: 5px;
+    width: 50%;
+
+}
+
+.review-submit:hover {
+    cursor: pointer;
+    color: yellow
+}
+
+.star-form {
+    width: 60%;
+    height: 30px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.stars {
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+}
