@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         spotId: 1,
-        url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3efe9f0c-9481-4478-bf95-549d5f215bc8/df2v2nn-dabd9d19-1549-45d6-abc8-e637ae18f600.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzNlZmU5ZjBjLTk0ODEtNDQ3OC1iZjk1LTU0OWQ1ZjIxNWJjOFwvZGYydjJubi1kYWJkOWQxOS0xNTQ5LTQ1ZDYtYWJjOC1lNjM3YWUxOGY2MDAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.S6kTnpT7nbGkHosBjX0vRdCUrKujnx0oG30j4eUuXz4",
+        url: "https://oyster.ignimgs.com/mediawiki/apis.ign.com/cyberpunk-2077/4/45/98E7D7AA-B739-4C4E-9C6A-B9C3FD53E2B1.jpeg",
         preview: false,
       },
       {
