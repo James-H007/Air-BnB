@@ -15,7 +15,7 @@ module.exports = {
       {
         // id: 1,
         spotId: 1,
-        userId: 1,
+        userId: 2,
         review: "It was mid.",
         stars: 4,
         // createdAt: new Date('2023-02-01T00:00:00'),
@@ -24,7 +24,7 @@ module.exports = {
       {
         // id: 2,
         spotId: 2,
-        userId: 2,
+        userId: 1,
         review: "I got punched by some psychic person. Don't go here",
         stars: 1,
         // createdAt: new Date('2023-02-01T00:00:00'),
@@ -33,7 +33,7 @@ module.exports = {
       {
         // id: 3,
         spotId: 4,
-        userId: 3,
+        userId: 2,
         review: "Turns out they did scam me. Good icebreaker story though.",
         stars: 2,
         // createdAt: new Date('2023-02-01T00:00:00'),
