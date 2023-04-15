@@ -134,13 +134,13 @@ const SpotReviews = ({ id, ownerId }) => {
                         <p className="year">{months[(new Date(createdAt)).getMonth()]} {createdAt.slice(0, 4)}</p>
                         <p className="review-para">{review}</p>
                         <div className="update-delete">
-                            {Number(userId) === user.id && <button className="review-button">Update</button>}
-                            {Number(userId) === user.id && <OpenModalMenuItem
+                            {user && userId && Number(userId) === user.id && <button className="review-button">Update</button>}
+                            {user && userId && Number(userId) === user.id && <OpenModalMenuItem
                                 itemText={
                                     <button className="review-button">Delete</button>
                                 }
                                 onItemClick={closeMenu}
-                                modalComponent={<DeleteReview user={user} reviews={reviews} />}
+                                modalComponent={<DeleteReview user={user} reviews={reviews} id={id} />}
                             />}
                         </div>
                     </li>
