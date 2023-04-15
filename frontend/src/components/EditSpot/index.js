@@ -1,14 +1,17 @@
 
 import { useDispatch, useSelector } from 'react-redux';
-import './createSpot.css'
 import { useState } from 'react';
 import * as spotActions from "../../store/spots"
 import * as spotImageActions from "../../store/spotimage"
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import "./editSpot.css"
 
 
-function CreateSpot() {
+function EditSpot() {
+    const { id } = useParams();
+    const selectedSpot = useSelector(state => state.spot.spot)
+    console.log(selectedSpot)
     const dispatch = useDispatch();
     const history = useHistory();
     const placeholder = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
@@ -29,6 +32,25 @@ function CreateSpot() {
     const [imgThree, setImgThree] = useState({})
     const [imgFour, setImgFour] = useState({})
     const [imgCheck, setImgCheck] = useState(false)
+
+    useEffect(() => {
+        console.log("hit")
+        console.log(dispatch(spotActions.fetchSingleSpot(id)))
+
+    }, [dispatch, id])
+
+    useEffect(() => {
+        if (selectedSpot) {
+            const { address, city, state, country, name, description, price } = selectedSpot;
+            setName(name);
+            setAddress(address)
+            setCity(city)
+            setState(state)
+            setCountry(country)
+            setPrice(price)
+            setDescription(description)
+        }
+    }, [selectedSpot])
 
 
     const handleImageInput = (newUrl, idx) => {
@@ -60,7 +82,7 @@ function CreateSpot() {
         const errors = {}
         const allImages = [previewImage, imgOne, imgTwo, imgThree, imgFour]
         const validImgs = [".jpg", "jpeg", ".png"]
-        if (!previewImage.url) { errors["preview"] = "Preview image is required." }
+        // if (!previewImage.url) { errors["preview"] = "Preview image is required." }
         if (country.length === 0) { errors["country"] = "Country is required" }
         if (address.length === 0) { errors["address"] = "Address is required" }
         if (city.length === 0) { errors["city"] = "City is required" }
@@ -71,12 +93,12 @@ function CreateSpot() {
         if (isNaN(Number(price))) { errors["price"] = "Not a valid input, please try again" }
 
 
-        for (let i = 0; i < allImages.length; i++) {
-            let image = allImages[i]
-            if (image.url && !validImgs.includes(image.url.slice(-4))) {
-                errors["url"] = "Image URL must end in .png, .jpg, or jpeg"
-            }
-        }
+        // for (let i = 0; i < allImages.length; i++) {
+        //     let image = allImages[i]
+        //     if (image.url && !validImgs.includes(image.url.slice(-4))) {
+        //         errors["url"] = "Image URL must end in .png, .jpg, or jpeg"
+        //     }
+        // }
 
 
         // console.log(errors)
@@ -105,16 +127,18 @@ function CreateSpot() {
             return
         }
 
+        const data = { address, city, state, country, name, description, price }
+
         try {
-            const newSpot = await dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }));
-            const { id } = newSpot;
+            const newSpot = await dispatch(spotActions.updateSpot(data, id));
+            // const { id } = newSpot;
             // console.log(id)
             // console.log(newSpot);
-            await dispatch(spotImageActions.addImage(previewImage, id))
-            if (imgOne) await dispatch(spotImageActions.addImage(imgOne, id))
-            if (imgTwo) await dispatch(spotImageActions.addImage(imgTwo, id))
-            if (imgThree) await dispatch(spotImageActions.addImage(imgThree, id))
-            if (imgFour) await dispatch(spotImageActions.addImage(imgFour, id))
+            // await dispatch(spotImageActions.addImage(previewImage, id))
+            // if (imgOne) await dispatch(spotImageActions.addImage(imgOne, id))
+            // if (imgTwo) await dispatch(spotImageActions.addImage(imgTwo, id))
+            // if (imgThree) await dispatch(spotImageActions.addImage(imgThree, id))
+            // if (imgFour) await dispatch(spotImageActions.addImage(imgFour, id))
 
             history.push(`/spots/${id}`);
         } catch (res) {
@@ -127,12 +151,11 @@ function CreateSpot() {
         }
     };
 
-
     return (
         <>
             <div className='entire-spot-creation'>
                 <div className='spot-creation-start'>
-                    <h2>Create a New Spot</h2>
+                    <h2>Edit Spot</h2>
                     <h3>Where's your place located?</h3>
                     <h4>Guests will only get your exact address once they booked a reservation</h4>
                 </div>
@@ -288,4 +311,5 @@ function CreateSpot() {
     )
 }
 
-export default CreateSpot
+
+export default EditSpot

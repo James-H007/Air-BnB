@@ -40,6 +40,7 @@ const validateNewSpot = [
         .withMessage('Country is required'),
     check('lat')
         .exists({ checkFalsy: true })
+        .optional()
         .notEmpty()
         .custom((value) => {
             if (isNaN(parseFloat(value))) {
@@ -49,6 +50,7 @@ const validateNewSpot = [
         })
         .withMessage('Latitude is not valid'),
     check('lng')
+        .optional()
         .exists({ checkFalsy: true })
         .notEmpty()
         .custom((value) => {
@@ -61,12 +63,19 @@ const validateNewSpot = [
     check('name')
         .exists({ checkFalsy: true })
         .notEmpty()
+        .custom((value) => {
+            if (value.length === 0) {
+                throw new Error("Name is required")
+            }
+            return value
+        })
         .isLength({ max: 49 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Description is required'),
+        .isLength({ min: 30 })
+        .withMessage('Description needs 30 or more characters'),
     check('price')
         .exists({ checkFalsy: true })
         .notEmpty()

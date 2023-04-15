@@ -363,19 +363,55 @@
 
 //OPTIONAL: OpenModalMenuItem =====================
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { fetchSpots } from "../../store/spots";
 
 
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [showMenu, setShowMenu] = useState(false);
+    const [hasSpot, setHasSpot] = useState(false)
     const ulRef = useRef(); //Referes
+    const spots = useSelector(state => state.spot.spots)
+
+    // console.log(spots)
+    // console.log(user)
+
+
+    const checkSpot = () => {
+
+        if (spots && user) {
+            const spotOwners = spots.map(spots => spots.ownerId)
+            if (spotOwners.includes(user.id)) {
+
+                setHasSpot(true)
+
+            }
+            else {
+                setHasSpot(false)
+            }
+        }
+
+    }
+
+
+    useEffect(() => {
+        dispatch(fetchSpots())
+
+    }, [dispatch])
+
+    useEffect(() => {
+        checkSpot()
+    }, [user, spots])
+
 
     const openMenu = () => {
         if (showMenu) return;
@@ -402,6 +438,7 @@ function ProfileButton({ user }) {
         e.preventDefault();
         dispatch(sessionActions.logout());
         closeMenu();
+        history.push('/')
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -416,9 +453,11 @@ function ProfileButton({ user }) {
             <ul className={ulClassName} ref={ulRef}>
                 {user ? (
                     <>
-                        <li className="user-info">{user.username}</li>
-                        <li className="user-info">Hello {user.firstName} {user.lastName}</li>
+                        <li className="user-info">Hello {user.username}</li>
+                        {/* <li className="user-info">Hello {user.firstName} {user.lastName}</li> */}
                         <li className="user-info">{user.email}</li>
+                        {hasSpot && <NavLink to="/spots/manage"><li className="user-create"> Manage Spots</li></NavLink>}
+                        {!hasSpot && <NavLink to="/spots/create"><li className="user-create">Create a New Spot</li></NavLink>}
                         <li>
                             <button onClick={logout}>Log Out</button>
                         </li>

@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         spotId: 1,
-        url: "https://static.wikia.nocookie.net/cyberpunk/images/9/92/Watson_Database_CP2077.png/revision/latest?cb=20210806183404",
+        url: "https://i.redd.it/buaxvmhc50581.png",
         preview: false,
       },
       {
