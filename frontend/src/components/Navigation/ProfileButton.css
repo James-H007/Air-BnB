@@ -71,3 +71,9 @@ button {
     margin-right: 10px;
     margin-top: 0px;
 }
+
+.user-create {
+    color: rgb(51, 166, 219);
+    border-bottom: 1px dotted #ccc;
+    ;
+}

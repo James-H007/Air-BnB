@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchSpotReviews } from "../../store/review"
 import './reviewDetails.css'
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { NavLink } from "react-router-dom"
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
@@ -19,9 +19,9 @@ const SpotReviews = ({ id, ownerId }) => {
     const [isOwner, setOwner] = useState(false)
     const [allowReview, setAllowReview] = useState(false)
     const [showMenu, setShowMenu] = useState(false);
-    // const ulRef = useRef(); //Referes
-    console.log("Reviews", reviews)
-    console.log(user)
+    const ulRef = useRef(); //Referes
+    // console.log("Reviews", reviews)
+    // console.log(user)
 
     const openMenu = () => {
         if (showMenu) return;
@@ -54,18 +54,12 @@ const SpotReviews = ({ id, ownerId }) => {
         }
 
         const checkReviewed = () => {
-            if (user) {
-                if (!reviews) {
-                    setAllowReview(true)
-                    return
-                }
-
-                if (reviews) {
-                    const reviewIds = reviews.map(review => review.userId)
-                    console.log(reviewIds)
-                    setAllowReview(!reviewIds.includes(Number(user.id)))
-                    console.log(allowReview)
-                }
+            if (user && reviews) {
+                const reviewIds = reviews.map(review => review.userId)
+                setAllowReview(!reviewIds.includes(Number(user.id)))
+            }
+            else if (user && !reviews) {
+                setAllowReview(true)
             }
         }
 
@@ -77,7 +71,13 @@ const SpotReviews = ({ id, ownerId }) => {
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
+    // useEffect(() => {
+    //     dispatch(fetchSpotReviews(id))
+    // }, [dispatch, id])
 
+    const reviewReorder = () => {
+
+    }
 
 
     useEffect(() => {
@@ -94,21 +94,25 @@ const SpotReviews = ({ id, ownerId }) => {
 
     return (
         <>
-            {reviews && <div className="comment-section">
-                {!isOwner && allowReview &&
-                    <>
-                        <div className="review-button">
+            {user && !isOwner && allowReview &&
+                <>
+                    <div >
+                        <button className="review-button">
                             <OpenModalMenuItem
                                 itemText="Post a review"
                                 onItemClick={closeMenu}
                                 modalComponent={<ReviewFormModal id={id} />}
-                            />
-                        </div>
+                            >
+                            </OpenModalMenuItem>
+                        </button>
+                    </div>
 
 
 
-                    </>
-                }
+                </>
+            }
+            {reviews && <div className="comment-section">
+
                 {reviews.map(({ id, review, createdAt, updatedAt, User }) => (
                     <li key={id} className="indiv-review">
                         <p className="first-name">{User.firstName}</p>

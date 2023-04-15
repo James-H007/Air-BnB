@@ -6,11 +6,20 @@ import { csrfFetch } from "./csrf";
 const LOAD_SPOT = 'api/getSpot';
 const GET_SINGLE_SPOT = 'api/getSingleSpot'
 const CREATE_SPOT = 'api/spots/create'
+const LOAD_USER_SPOT = 'api/spots/current'
+const UPDATE_SPOT = 'api/spots/update'
 
 const loadSpots = (spots) => {
     // console.log(spots)
     return {
         type: LOAD_SPOT,
+        spots
+    }
+}
+
+const loadUserSpots = (spots) => {
+    return {
+        type: LOAD_USER_SPOT,
         spots
     }
 }
@@ -25,6 +34,13 @@ const getSingleSpot = (spot) => {
 const makeSpot = (spot) => {
     return {
         type: CREATE_SPOT,
+        spot
+    }
+}
+
+const editSingleSpot = (spot) => {
+    return {
+        type: UPDATE_SPOT,
         spot
     }
 }
@@ -44,6 +60,14 @@ export const fetchSingleSpot = (id) => async (dispatch) => {
     const data = await response.json();
     // console.log(data)
     dispatch(getSingleSpot(data))
+    return data
+}
+
+export const fetchUserSpots = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/current`)
+    const data = await response.json();
+    // console.log(data)
+    dispatch(loadUserSpots(data))
     return data
 }
 
@@ -70,7 +94,28 @@ export const createSpot = (spot) => async (dispatch) => {
     return data
 }
 
-const initalState = { spots: [] }
+export const updateSpot = (spot, spotId) => async (dispatch) => {
+    const { address, city, state, country, lat, lng, name, description, price } = spot;
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        body: JSON.stringify({
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        })
+    })
+    const data = await response.json()
+    dispatch(editSingleSpot(data))
+    return data
+}
+
+const initalState = { spots: [], owned: {} }
 
 
 const spotReducer = (state = initalState, action) => {
@@ -86,7 +131,13 @@ const spotReducer = (state = initalState, action) => {
             return { ...newState, spot: action.spot }
         case CREATE_SPOT:
             return { ...newState, spots: [...state.spots, action.spot] }
-
+        case LOAD_USER_SPOT:
+            return { ...newState, owned: action.spots }
+        case UPDATE_SPOT:
+            const index = newState.spots.findIndex(spot => spot.id === action.spot.id)
+            console.log(action.spot)
+            newState.spots[index] = action.spot;
+            return { ...newState }
         default:
             return state;
     }

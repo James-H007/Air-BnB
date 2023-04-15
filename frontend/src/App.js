@@ -9,7 +9,9 @@ import Navigation from "./components/Navigation";
 import SpotList from "./components/Spots";
 import SpotDetails from "./components/SpotDetails";
 import CreateSpot from "./components/CreateSpot";
+import EditSpot from "./components/EditSpot";
 import './app.css'
+import ManageSpots from "./components/ManageSpots";
 
 // function App() {
 //   return (
@@ -91,6 +93,12 @@ function App() {
             </Route>
             <Route exact path="/">
               <SpotList />
+            </Route>
+            <Route exact path="/spots/manage">
+              <ManageSpots />
+            </Route>
+            <Route path="/spots/:id/edit">
+              <EditSpot />
             </Route>
             <Route exact path="/spots/create">
               <CreateSpot />

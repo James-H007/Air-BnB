@@ -1,0 +1,155 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+
+
+.entire-page {
+    font-size: 30px;
+    font-family: 'Rubik';
+    width: 100%;
+
+
+}
+
+.titles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 90px;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 50px;
+}
+
+.new-spot {
+    background-color: black;
+    border: none;
+    color: white;
+    height: 40px;
+    border-radius: 5px;
+    margin-top: 5px;
+    width: 150px;
+}
+
+.new-spot:hover {
+    cursor: pointer;
+    color: yellow
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    font-family: 'Rubik';
+    width: 100%;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.major-spot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    min-width: 25%;
+    width: calc(25% - 10px);
+    margin-bottom: 20px;
+    /* background-color: rgb(0, 0, 0); */
+    border-radius: 5px;
+
+}
+
+.major-spot-container:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
+}
+
+.spot-container {
+    font-family: 'Rubik';
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.preview-image {
+    height: 90%;
+    width: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.spot-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.spot-text {
+    font-family: 'Rubik';
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    text-decoration: dashed;
+    margin-left: 0;
+    text-align: start;
+}
+
+.star-rating {
+    font-size: 17px;
+    text-align: end;
+    text-decoration: none;
+    right: 0px;
+}
+
+.star-rating:hover {
+    cursor: default
+}
+
+.tech-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.tech-btn {
+    background-color: black;
+    border: none;
+    color: white;
+    height: 40px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin: 5px;
+    width: 80px;
+}
+
+.tech-btn:hover {
+    cursor: pointer;
+    color: yellow
+}
+
+
+@media (max-width: 1300px) {
+    .major-spot-container {
+        width: calc(33% - 10px);
+    }
+}
+
+@media (max-width: 1100px) {
+    .major-spot-container {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 900px) {
+    .major-spot-container {
+        width: calc(100% - 10px);
+    }
+}

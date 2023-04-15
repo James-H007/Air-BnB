@@ -52,7 +52,9 @@ export const createReview = (post, spotId) => async (dispatch) => {
     })
 
     const data = await response.json()
+    console.log(data)
     dispatch(makeSpotReview(data))
+    return data
 }
 
 const initialState = { reviews: [] }
@@ -64,7 +66,8 @@ const reviewReducer = (state = initialState, action) => {
             return { ...newState, reviews: action.reviews }
         case MAKE_REVIEW:
             const newReview = action.review
-            return { ...newState, reviews: [...newState, newReview] }
+            console.log({ ...newState, reviews: [newReview] })
+            return { ...newState, reviews: [newReview] }
         default:
             return state;
     }
