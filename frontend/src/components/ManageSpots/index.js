@@ -73,7 +73,7 @@ function ManageSpots() {
                                             {city}, {state}
                                         </li>
                                         <li className="star-rating">
-                                            ⭐{avgRating ? avgRating.toFixed(2) : "New"}
+                                            ⭐{avgRating ? Number(avgRating).toFixed(2) : "New"}
                                         </li>
                                     </div>
                                     <li>
