@@ -105,8 +105,8 @@ const SpotDetails = () => {
                         <div className="reservation">
                             <div className="reserve-info">
                                 <p className="price">${price} night</p>
-                                {numReviews > 0 && <p className="review-prev">⭐ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} {numReviews > 1 ? "reviews" : "review"}</p>}
-                                {numReviews === 0 && <p className="review-prev">⭐ {avgStarRating ? avgStarRating.toFixed(2) : "New"} </p>}
+                                {numReviews > 0 && <p className="review-prev">⭐ {avgStarRating ? Number(avgStarRating).toFixed(2) : "New"} • {numReviews} {numReviews > 1 ? "reviews" : "review"}</p>}
+                                {numReviews === 0 && <p className="review-prev">⭐ {avgStarRating ? Number(avgStarRating).toFixed(2) : "New"} </p>}
                             </div>
                             <button onClick={handleAlert} className="reserve-button">Reserve</button>
                         </div>
@@ -114,11 +114,11 @@ const SpotDetails = () => {
 
                     <section>
                         {numReviews > 0 &&
-                            < div className="big-review-summ">★ {avgStarRating ? avgStarRating.toFixed(2) : "New"} • {numReviews} {numReviews > 1 ? "reviews" : "review"}</div>
+                            < div className="big-review-summ">★ {avgStarRating ? Number(avgStarRating).toFixed(2) : "New"} • {numReviews} {numReviews > 1 ? "reviews" : "review"}</div>
                         }
                         {
                             numReviews === 0 &&
-                            < div className="big-review-summ">★ {avgStarRating ? avgStarRating.toFixed(2) : "New"}</div>
+                            < div className="big-review-summ">★ {avgStarRating ? Number(avgStarRating).toFixed(2) : "New"}</div>
                         }
                     </section >
                     <section>
