@@ -15,7 +15,7 @@ const colors = {
 const ReviewFormModal = ({ id }) => {
     const { closeModal } = useModal() //DON'T FORGET THE PARATHESIS
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
     const [review, setReview] = useState("")
     const holder = Array(5).fill(0);
     const [stars, setStars] = useState(0);

@@ -20,13 +20,13 @@ const SpotDetails = () => {
     const [avgStarRating, setAvgStarRating] = useState(0);
     const [numReviews, setNumReviews] = useState(0);
     const [SpotImages, setSpotImages] = useState()
-    const [previewImage, setPreviewImage] = useState()
+    const [previewImage, setPreviewImage] = useState("")
     const [load, setLoad] = useState(false)
     const placeholders = [placeholder, placeholder, placeholder, placeholder]
-    const [subImages, setSubImages] = useState()
-    const [firstName, setFirstName] = useState()
-    const [lastName, setLastName] = useState()
-    const [ownerId, setOwnerId] = useState()
+    const [subImages, setSubImages] = useState([])
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [ownerId, setOwnerId] = useState(0)
     // const [subImages, setSubImages] = useState([placeholder, placeholder, placeholder, placeholder])
 
 
@@ -65,6 +65,7 @@ const SpotDetails = () => {
             console.log(filteredImages)
 
             for (let i = 0; i < filteredImages.length; i++) {
+                //Have the placeholders remodify itself into the filtered Images
                 placeholders[i] = filteredImages[i].url
             }
 

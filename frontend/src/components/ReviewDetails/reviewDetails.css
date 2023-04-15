@@ -26,8 +26,7 @@
 }
 
 .review-button {
-    background-color: red;
-    width: 15%;
+    width: 100px;
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -40,4 +39,10 @@
 
 .review-button:hover {
     cursor: pointer;
+    opacity: .8;
+}
+
+.update-delete {
+    display: flex;
+    gap: 10px;
 }

@@ -364,7 +364,7 @@
 //OPTIONAL: OpenModalMenuItem =====================
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
@@ -376,13 +376,14 @@ import './ProfileButton.css'
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [showMenu, setShowMenu] = useState(false);
     const [hasSpot, setHasSpot] = useState(false)
     const ulRef = useRef(); //Referes
     const spots = useSelector(state => state.spot.spots)
 
-    console.log(spots)
-    console.log(user)
+    // console.log(spots)
+    // console.log(user)
 
 
     const checkSpot = () => {
@@ -393,6 +394,9 @@ function ProfileButton({ user }) {
 
                 setHasSpot(true)
 
+            }
+            else {
+                setHasSpot(false)
             }
         }
 
@@ -434,6 +438,7 @@ function ProfileButton({ user }) {
         e.preventDefault();
         dispatch(sessionActions.logout());
         closeMenu();
+        history.push('/')
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

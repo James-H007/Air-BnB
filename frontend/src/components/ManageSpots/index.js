@@ -1,15 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUserSpots } from "../../store/spots";
 import { NavLink, Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip"
 import "./manageSpot.css"
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import SpotDelete from "./SpotDelete";
 
 
 
 function ManageSpots() {
     const dispatch = useDispatch();
+    const ulRef = useRef(); //Referes
     // const [loading, setLoading] = useState();
+    const [showMenu, setShowMenu] = useState(false);
+
+    useEffect(() => {
+        if (!showMenu) return;
+
+        const closeMenu = (e) => {
+            if (!ulRef.current.contains(e.target)) {
+                setShowMenu(false);
+            }
+        };
+
+        document.addEventListener('click', closeMenu);
+
+        return () => document.removeEventListener("click", closeMenu);
+    }, [showMenu]);
+
+    const closeMenu = () => setShowMenu(false);
+
 
 
     const spots = useSelector(state => state.spot.owned?.Spots) //Optional chaining stops app from breaking
@@ -61,7 +82,11 @@ function ManageSpots() {
                                 </NavLink>
                                 <div className="tech-buttons">
                                     <NavLink to={`/spots/${id}/edit`}><button className="tech-btn">Update</button></NavLink>
-                                    <button className="tech-btn">Delete</button>
+                                    <button className="tech-btn"><OpenModalMenuItem
+                                        itemText="Delete"
+                                        onItemClick={closeMenu}
+                                        modalComponent={<SpotDelete id={id} />}
+                                    /></button>
                                 </div>
                             </li>
                         ))}

@@ -1,0 +1,71 @@
+.spot-delete-form {
+    background-color: lightgray;
+    font-family: 'Rubik';
+    width: 500px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.spot-delete-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.header-delete {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.disclaimer {
+    margin-bottom: 5px;
+    margin-top: 3px;
+}
+
+
+
+.delete-btn1 {
+    width: 80%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Rubik';
+    color: white;
+    background-color: rgb(117, 12, 12);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.delete-btn1:hover {
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.delete-btn2 {
+    width: 80%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Rubik';
+    color: white;
+    background-color: rgb(104, 104, 104);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.delete-btn2:hover {
+    cursor: pointer;
+    opacity: 80%;
+}

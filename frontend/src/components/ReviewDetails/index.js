@@ -1,12 +1,13 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchSpotReviews } from "../../store/review"
+import { fetchSpotReviews, removeReview } from "../../store/review"
 import './reviewDetails.css'
 import { useState, useRef } from "react"
 import { NavLink } from "react-router-dom"
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import ReviewFormModal from "../ReviewFormModal"
+import DeleteReview from "./deleteReview"
 
 
 
@@ -20,8 +21,8 @@ const SpotReviews = ({ id, ownerId }) => {
     const [allowReview, setAllowReview] = useState(false)
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef(); //Referes
-    // console.log("Reviews", reviews)
-    // console.log(user)
+    console.log("Reviews", reviews)
+    console.log(user)
 
     const openMenu = () => {
         if (showMenu) return;
@@ -63,6 +64,8 @@ const SpotReviews = ({ id, ownerId }) => {
             }
         }
 
+
+
         checkOwner();
         checkReviewed();
     }, [user, ownerId, reviews])
@@ -75,9 +78,7 @@ const SpotReviews = ({ id, ownerId }) => {
     //     dispatch(fetchSpotReviews(id))
     // }, [dispatch, id])
 
-    const reviewReorder = () => {
 
-    }
 
 
     useEffect(() => {
@@ -91,6 +92,20 @@ const SpotReviews = ({ id, ownerId }) => {
 
         }
     }, [dispatch])
+
+    // const handleDelete = async () => {
+    //     if (user && reviews) {
+    //         const reviewIds = reviews.map(review => review.userId)
+
+    //         if (reviewIds.includes(user.id)) {
+    //             console.log(reviews)
+    //             const selectedReview = reviews.find(review => review.userId === user.id)
+    //             console.log(selectedReview)
+    //             await dispatch(removeReview(selectedReview.id))
+    //             await dispatch(fetchSpotReviews(id))
+    //         }
+    //     }
+    // }
 
     return (
         <>
@@ -113,11 +128,21 @@ const SpotReviews = ({ id, ownerId }) => {
             }
             {reviews && <div className="comment-section">
 
-                {reviews.map(({ id, review, createdAt, updatedAt, User }) => (
+                {reviews.map(({ id, review, createdAt, updatedAt, User, userId }) => (
                     <li key={id} className="indiv-review">
                         <p className="first-name">{User.firstName}</p>
                         <p className="year">{months[(new Date(createdAt)).getMonth()]} {createdAt.slice(0, 4)}</p>
                         <p className="review-para">{review}</p>
+                        <div className="update-delete">
+                            {Number(userId) === user.id && <button className="review-button">Update</button>}
+                            {Number(userId) === user.id && <OpenModalMenuItem
+                                itemText={
+                                    <button className="review-button">Delete</button>
+                                }
+                                onItemClick={closeMenu}
+                                modalComponent={<DeleteReview user={user} reviews={reviews} />}
+                            />}
+                        </div>
                     </li>
                 ))}
             </div>}
