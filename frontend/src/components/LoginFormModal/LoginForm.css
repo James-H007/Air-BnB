@@ -1,7 +1,7 @@
 .title {
     font-size: 50px;
     font-weight: bold;
-    position: absolute;
+    /* position: absolute; */
     top: 5em;
     font-family: 'Rubik';
 }
@@ -9,17 +9,16 @@
 .login-form {
     display: flex;
     font-family: 'Rubik', sans-serif;
-    height: 20em;
+    height: 25em;
     width: 25em;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: lightgray;
-    margin: auto;
-    margin-top: 15em;
-    border: 1px solid black;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-    border-radius: 5px;
+    background-color: rgb(243, 243, 243);
+
+    border: 2px solid black;
+
+    border-radius: 10px;
 }
 
 .buttons {
@@ -46,6 +45,8 @@
     margin-left: 1em;
     width: 300px;
     height: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 .login-button {
@@ -82,7 +83,6 @@
 .invalid-cred {
     color: red;
     font-weight: bold;
-    margin-right: 10%;
 }
 
 .demo-login {
