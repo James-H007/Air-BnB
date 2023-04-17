@@ -8,20 +8,24 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import ReviewFormModal from "../ReviewFormModal"
 import DeleteReview from "./deleteReview"
+import { useModal } from '../../context/Modal';
+import { useContext } from "react"
 
 
 
 
 const SpotReviews = ({ id, ownerId }) => {
     // console.log(id)
+
     const dispatch = useDispatch()
     const reviews = useSelector(state => state.review.reviews.Reviews)
     const user = useSelector(state => state.session.user)
     const [isOwner, setOwner] = useState(false)
     const [allowReview, setAllowReview] = useState(false)
     const [showMenu, setShowMenu] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false)
     const ulRef = useRef(); //Referes
-    // console.log("Reviews", reviews)
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     // console.log(user)
 
     const openMenu = () => {
@@ -70,9 +74,25 @@ const SpotReviews = ({ id, ownerId }) => {
         checkReviewed();
     }, [user, ownerId, reviews])
 
+    const reviewCheck = () => {
+        if (reviews) {
+            reviews.sort(function (a, b) {
+                return new Date(b.createdAt) - new Date(a.createdAt)
+            })
+
+        }
+    }
 
 
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    useEffect(() => {
+        dispatch(fetchSpotReviews(id))
+        reviewCheck()
+        setIsLoaded(true)
+    }, [dispatch, id])
+
+
+
+
 
     // useEffect(() => {
     //     dispatch(fetchSpotReviews(id))
@@ -80,18 +100,18 @@ const SpotReviews = ({ id, ownerId }) => {
 
 
 
+    // useEffect(() => {
+    //     if (render) {
 
-    useEffect(() => {
-        dispatch(fetchSpotReviews(id))
+    //         dispatch(fetchSpotReviews(id))
+    //         setRender(false)
+    //     }
 
-        if (reviews) {
-            reviews.sort(function (a, b) {
-                return new Date(b.createdAt) - new Date(a.createdAt)
-            })
-            // console.log(reviews)
 
-        }
-    }, [dispatch])
+
+    // }, [setRender])
+
+
 
     // const handleDelete = async () => {
     //     if (user && reviews) {
@@ -107,9 +127,11 @@ const SpotReviews = ({ id, ownerId }) => {
     //     }
     // }
 
+
     return (
         <>
-            {user && !isOwner && allowReview &&
+
+            {isLoaded && user && !isOwner && allowReview &&
                 <>
                     <div >
                         <button className="review-button">
@@ -126,9 +148,9 @@ const SpotReviews = ({ id, ownerId }) => {
 
                 </>
             }
-            {reviews && <div className="comment-section">
+            {isLoaded && reviews && <div className="comment-section">
 
-                {reviews.map(({ id, review, createdAt, updatedAt, User, userId }) => (
+                {reviews.map(({ id, review, createdAt, updatedAt, User, userId, spotId }) => (
                     <li key={id} className="indiv-review">
                         <p className="first-name">{User.firstName}</p>
                         <p className="year">{months[(new Date(createdAt)).getMonth()]} {createdAt.slice(0, 4)}</p>
@@ -140,14 +162,14 @@ const SpotReviews = ({ id, ownerId }) => {
                                     <button className="review-button">Delete</button>
                                 }
                                 onItemClick={closeMenu}
-                                modalComponent={<DeleteReview user={user} reviews={reviews} id={id} />}
+                                modalComponent={<DeleteReview user={user} reviews={reviews} />}
                             />}
                         </div>
                     </li>
                 ))}
             </div>}
 
-            {!reviews && user && !isOwner && <div className="first-review">
+            {isLoaded && !reviews && user && !isOwner && <div className="first-review">
                 Be the first to post a review!
             </div>}
         </>

@@ -83,7 +83,7 @@ const SpotDetails = () => {
             {selectedSpot && load &&
                 <div className="entire-spot">
                     <header>{name}</header>
-                    <span className="location-info">{city},{state},{country}</span>
+                    <span className="location-info">{city}{", "}{state}{" "}{country}</span>
                     <div className="image-container">
                         <section className="main-image">
                             <img src={previewImage} alt="preview-image" className="preview" />

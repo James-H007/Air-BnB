@@ -4,9 +4,10 @@ import { useModal } from '../../context/Modal';
 import * as spotActions from "../../store/spots"
 import { fetchSpotReviews, removeReview } from "../../store/review"
 
-function DeleteReview({ user, reviews, id }) {
-    const { closeModal } = useModal();
+function DeleteReview({ user, reviews, spotId }) {
+    const { closeModal, setRender } = useModal();
     const dispatch = useDispatch();
+
 
     const handleDelete = async () => {
         if (user && reviews) {
@@ -15,16 +16,16 @@ function DeleteReview({ user, reviews, id }) {
             if (reviewIds.includes(user.id)) {
                 // console.log(reviews)
                 const selectedReview = reviews.find(review => review.userId === user.id)
-                // console.log(selectedReview)
+                console.log(selectedReview)
                 await dispatch(removeReview(selectedReview.id))
-                await dispatch(fetchSpotReviews(id))
+                await dispatch(fetchSpotReviews(selectedReview.spotId))
                 closeModal()
             }
         }
     }
 
     // useEffect(() => {
-    //     dispatch(fetchSpotReviews(id))
+    //     dispatch(fetchSpotReviews(spottyId))
 
     //     if (reviews) {
     //         reviews.sort(function (a, b) {

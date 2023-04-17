@@ -39,6 +39,7 @@ const ModalContext = createContext();
 export function ModalProvider({ children }) {
     const [modalContent, setModalContent] = useState(null);
     const [onModalClose, setOnModalClose] = useState(null);
+    const [render, setRender] = useState(false)
 
     function closeModal() {
         setModalContent(null); //Sets content back to null when we close
@@ -51,7 +52,7 @@ export function ModalProvider({ children }) {
     //modal-background needs to be blurry
     //modal just represents the modal
     return (
-        <ModalContext.Provider value={{ modalContent, setModalContent, onModalClose, setOnModalClose, closeModal }}>
+        <ModalContext.Provider value={{ modalContent, setModalContent, onModalClose, setOnModalClose, closeModal, render, setRender }}>
             {children}
             {modalContent && <div className="modal-background" onClick={closeModal} />}
             {modalContent && <div className="modal">{modalContent}</div>}
