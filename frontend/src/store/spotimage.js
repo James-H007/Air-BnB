@@ -12,8 +12,8 @@ const addSpotImage = (image) => {
 
 export const addImage = (image, spotId) => async (dispatch) => {
     const { url, preview } = image;
-    console.log(image)
-    console.log(spotId)
+    // console.log(image)
+    // console.log(spotId)
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         body: JSON.stringify({
@@ -23,7 +23,7 @@ export const addImage = (image, spotId) => async (dispatch) => {
     })
 
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
     dispatch(addSpotImage(data))
     return data
 }

@@ -13,9 +13,9 @@ function DeleteReview({ user, reviews, id }) {
             const reviewIds = reviews.map(review => review.userId)
 
             if (reviewIds.includes(user.id)) {
-                console.log(reviews)
+                // console.log(reviews)
                 const selectedReview = reviews.find(review => review.userId === user.id)
-                console.log(selectedReview)
+                // console.log(selectedReview)
                 await dispatch(removeReview(selectedReview.id))
                 await dispatch(fetchSpotReviews(id))
                 closeModal()

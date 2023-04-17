@@ -30,9 +30,9 @@ const SpotDetails = () => {
     // const [subImages, setSubImages] = useState([placeholder, placeholder, placeholder, placeholder])
 
 
-    console.log(id)
+    // console.log(id)
     const selectedSpot = useSelector(state => state.spot.spot)
-    console.log(selectedSpot)
+    // console.log(selectedSpot)
 
     const handleAlert = () => {
         alert("Feature Coming Soon...")
@@ -62,7 +62,7 @@ const SpotDetails = () => {
             setPreviewImage(SpotImages.find(image => image.preview === true).url)
 
             const filteredImages = SpotImages.filter(image => image.preview === false);
-            console.log(filteredImages)
+            // console.log(filteredImages)
 
             for (let i = 0; i < filteredImages.length; i++) {
                 //Have the placeholders remodify itself into the filtered Images
@@ -73,7 +73,7 @@ const SpotDetails = () => {
             setFirstName(Owner.firstName);
             setLastName(Owner.lastName);
             setOwnerId(Owner.id)
-            console.log(Owner.id)
+            // console.log(Owner.id)
             setLoad(true)
         }
     }, [selectedSpot])

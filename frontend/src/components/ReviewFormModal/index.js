@@ -63,7 +63,7 @@ const ReviewFormModal = ({ id }) => {
         // console.log(id)
 
         const createdReview = await dispatch(reviewActions.createReview(data, id))
-        console.log(createdReview)
+        // console.log(createdReview)
         if (createdReview) {
             await dispatch(reviewActions.fetchSpotReviews(id))
             closeModal();
@@ -94,7 +94,7 @@ const ReviewFormModal = ({ id }) => {
 
                         {holder.map((__, idx) =>
                         (
-                            <li>
+                            <li key={idx}>
                                 <FaStar key={idx}
                                     style={{
                                         height: 20,

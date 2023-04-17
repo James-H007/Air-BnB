@@ -11,7 +11,7 @@ import "./editSpot.css"
 function EditSpot() {
     const { id } = useParams();
     const selectedSpot = useSelector(state => state.spot.spot)
-    console.log(selectedSpot)
+    // console.log(selectedSpot)
     const dispatch = useDispatch();
     const history = useHistory();
     const placeholder = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
@@ -34,7 +34,7 @@ function EditSpot() {
     const [imgCheck, setImgCheck] = useState(false)
 
     useEffect(() => {
-        console.log("hit")
+        // console.log("hit")
         console.log(dispatch(spotActions.fetchSingleSpot(id)))
 
     }, [dispatch, id])
@@ -56,7 +56,7 @@ function EditSpot() {
     const handleImageInput = (newUrl, idx) => {
         if (idx === 0) {
             setPreviewImage({ url: newUrl, preview: true })
-            console.log(previewImage)
+            // console.log(previewImage)
             return
         }
         else if (idx === 1) {
@@ -122,7 +122,7 @@ function EditSpot() {
         setErrors([]);
 
         if (Object.values(validationErrors).length > 0) {
-            console.log(Object.values(validationErrors).length)
+            // console.log(Object.values(validationErrors).length)
             setImgCheck(true)
             return
         }
@@ -142,9 +142,9 @@ function EditSpot() {
 
             history.push(`/spots/${id}`);
         } catch (res) {
-            console.log(res)
+            // console.log(res)
             const data = await res.json()
-            await console.log(data);
+            // await console.log(data);
             if (data && data.errors) setErrors(data.errors);
             setImgCheck(true)
             // console.log(errors)
