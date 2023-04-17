@@ -303,7 +303,7 @@ function EditSpot() {
                     <div className='spacers'></div>
 
                     <div className='button-container'>
-                        <button type="submit" className="spot-button" >Create Spot</button>
+                        <button type="submit" className="spot-button" >Update your Spot</button>
                     </div>
                 </form>
             </div>
