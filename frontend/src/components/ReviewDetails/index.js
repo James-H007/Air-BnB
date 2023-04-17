@@ -21,8 +21,8 @@ const SpotReviews = ({ id, ownerId }) => {
     const [allowReview, setAllowReview] = useState(false)
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef(); //Referes
-    console.log("Reviews", reviews)
-    console.log(user)
+    // console.log("Reviews", reviews)
+    // console.log(user)
 
     const openMenu = () => {
         if (showMenu) return;
@@ -50,7 +50,7 @@ const SpotReviews = ({ id, ownerId }) => {
         const checkOwner = () => {
             if (user) {
                 setOwner(user.id === ownerId)
-                console.log("The owner is", isOwner)
+                // console.log("The owner is", isOwner)
             }
         }
 

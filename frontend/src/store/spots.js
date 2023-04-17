@@ -96,9 +96,9 @@ export const createSpot = (spot) => async (dispatch) => {
             price
         })
     })
-    console.log(response)
+    // console.log(response)
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
     dispatch(makeSpot(data))
     return data
 }
@@ -109,7 +109,7 @@ export const removeSpot = (spotId) => async (dispatch) => {
     })
 
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
     dispatch(deleteSpot(spotId))
     return data
 }
@@ -155,7 +155,7 @@ const spotReducer = (state = initalState, action) => {
             return { ...newState, owned: action.spots }
         case UPDATE_SPOT:
             const index = newState.spots.findIndex(spot => spot.id === action.spot.id)
-            console.log(action.spot)
+            // console.log(action.spot)
             newState.spots[index] = action.spot;
             return { ...newState }
         case DELETE_SPOT:
