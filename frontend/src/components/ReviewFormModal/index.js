@@ -4,6 +4,7 @@ import './reviewForm.css'
 import { useEffect, useState } from 'react';
 import { FaStar } from "react-icons/fa"
 import * as reviewActions from "../../store/review"
+import { fetchSingleSpot } from "../../store/spots";
 import { useHistory } from 'react-router-dom';
 
 const colors = {
@@ -66,6 +67,7 @@ const ReviewFormModal = ({ id }) => {
         // console.log(createdReview)
         if (createdReview) {
             await dispatch(reviewActions.fetchSpotReviews(id))
+            await dispatch(fetchSingleSpot(id))
             closeModal();
         }
 
