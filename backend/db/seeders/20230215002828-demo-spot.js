@@ -55,62 +55,63 @@ module.exports = {
         // createdAt: new Date('2023-02-01T00:00:00'),
         // updatedAt: new Date('2023-03-01T00:00:00')
       },
-      {
-        //id:4,
-        ownerId: 3,
-        address: "1111 Wraith Lane",
-        city: "Badlands",
-        state: "California",
-        lat: 2.2,
-        lng: 1.1,
-        name: "Not Wraith's Quarters",
-        description: "We are not a SCAM",
-        price: 150.00
-      },
-      {
-        ownerId: 2,
-        address: "8882 High End Estate",
-        city: "City Center",
-        state: "Washington",
-        lat: 2.2,
-        lng: 1.1,
-        name: "Luxury Deluxe",
-        description: "The prices may seem high. But it's well worth it.",
-        price: 2000.00
-      },
-      {
-        ownerId: 3,
-        address: "1111 Atlantic Avenue",
-        city: "Pacifica",
-        state: "Oregon",
-        lat: 3.2,
-        lng: 3.1,
-        name: "Breezy Bash",
-        description: "Cool and windy here!",
-        price: 500.00
-      },
-      {
-        ownerId: 3,
-        address: "1111 Tank Drive",
-        city: "Santo Domingo",
-        state: "California",
-        lat: 5.0,
-        lng: 1.0,
-        name: "A Normal Place",
-        description: "We won't lie. We're basic.",
-        price: 250.00
-      },
-      {
-        ownerId: 3,
-        address: "8888 XXX Avenue",
-        city: "San Francisco",
-        state: "California",
-        lat: 5.0,
-        lng: 1.0,
-        name: "Arasaka-Lite",
-        description: "Live like those at the top.",
-        price: 800.00
-      }
+      // {
+      //   //id:4,
+      //   ownerId: 3,
+      //   address: "1111 Wraith Lane",
+      //   city: "Badlands",
+      //   state: "California",
+      //   country: "USA",
+      //   lat: 2.2,
+      //   lng: 1.1,
+      //   name: "Not Wraith's Quarters",
+      //   description: "We are not a SCAM",
+      //   price: 150.00
+      // },
+      // {
+      //   ownerId: 2,
+      //   address: "8882 High End Estate",
+      //   city: "City Center",
+      //   state: "Washington",
+      //   lat: 2.2,
+      //   lng: 1.1,
+      //   name: "Luxury Deluxe",
+      //   description: "The prices may seem high. But it's well worth it.",
+      //   price: 2000.00
+      // },
+      // {
+      //   ownerId: 3,
+      //   address: "1111 Atlantic Avenue",
+      //   city: "Pacifica",
+      //   state: "Oregon",
+      //   lat: 3.2,
+      //   lng: 3.1,
+      //   name: "Breezy Bash",
+      //   description: "Cool and windy here!",
+      //   price: 500.00
+      // },
+      // {
+      //   ownerId: 3,
+      //   address: "1111 Tank Drive",
+      //   city: "Santo Domingo",
+      //   state: "California",
+      //   lat: 5.0,
+      //   lng: 1.0,
+      //   name: "A Normal Place",
+      //   description: "We won't lie. We're basic.",
+      //   price: 250.00
+      // },
+      // {
+      //   ownerId: 3,
+      //   address: "8888 XXX Avenue",
+      //   city: "San Francisco",
+      //   state: "California",
+      //   lat: 5.0,
+      //   lng: 1.0,
+      //   name: "Arasaka-Lite",
+      //   description: "Live like those at the top.",
+      //   price: 800.00
+      // }
     ], {});
 
   },

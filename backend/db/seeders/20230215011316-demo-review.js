@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         // id: 3,
-        spotId: 4,
+        spotId: 3,
         userId: 2,
         review: "Turns out they did scam me. Good icebreaker story though.",
         stars: 2,
