@@ -19,7 +19,7 @@ module.exports = {
       },
       ownerId: {
         type: Sequelize.INTEGER,
-        references: {model: "Users"},
+        references: { model: "Users" },
         onDelete: 'CASCADE',
         allowNull: false
         // hooks: true
@@ -46,7 +46,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       price: {
         type: Sequelize.DECIMAL
